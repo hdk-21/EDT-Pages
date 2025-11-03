@@ -1270,6 +1270,124 @@ html.dark-mode .moon-icon {
     flex: 1;
 }
 
+/* 隐藏元素 */
+.hidden-section {
+    display: none;
+}
+
+/* QRCode 容器 */
+.qrcode-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 重置配置弹窗 */
+.reset-modal-title {
+    color: #ef4444;
+    margin-bottom: 15px;
+}
+
+.reset-modal-description {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.reset-modal-confirm {
+    color: #ef4444;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.reset-modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* 日志容器 */
+.logs-container {
+    margin-bottom: 20px;
+}
+
+.logs-loading {
+    text-align: center;
+    padding: 20px;
+    color: #6b7280;
+}
+
+.logs-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.logs-footer-text {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* 日志模态框 */
+.logs-modal {
+    overflow-y: auto;
+    width: 90vw;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logs-modal-title {
+    margin-bottom: 20px;
+}
+
+.logs-all-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* 订阅 API 弹窗 */
+.subapi-modal-title {
+    margin-bottom: 20px;
+}
+
+.subapi-form-group {
+    grid-template-columns: 1fr;
+}
+
+.subapi-status {
+    margin: 15px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: none;
+}
+
+.subapi-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* 输入字段特殊样式 */
+.subapi-input {
+    cursor: pointer;
+    background-color: #f9fafb;
+}
+
+/* 节点链接输入包装器 */
+.link-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.link-input-field {
+    flex: 1;
+}
+
 </style>
 </head>
 <body>
@@ -1359,12 +1477,12 @@ html.dark-mode .moon-icon {
                     <input type="number" id="randomCount" title="随机优选数量" min="1" max="999" value="16" onchange="markModified('sub')">
                 </div>
 
-                <div id="customIPSection" style="display:none" class="form-group">
+                <div id="customIPSection" class="form-group hidden-section">
                     <label for="customIPs">自定义优选地址</label>
                     <textarea id="customIPs" title="自定义优选地址" placeholder="每行一个地址，格式: IP[:端口]#备注" onchange="markModified('sub')"></textarea>
                 </div>
 
-                <div id="generatorSection" style="display:none" class="form-group">
+                <div id="generatorSection" class="form-group hidden-section">
                     <label for="generatorURL">优选订阅生成器</label>
                     <input type="text" id="generatorURL" title="优选订阅生成器" placeholder="sub.cmliussss.net" onchange="markModified('sub')">
                 </div>
@@ -1467,7 +1585,7 @@ html.dark-mode .moon-icon {
                 </div>
 
 
-                <div id="socks5Section" style="display:none">
+                <div id="socks5Section" class="hidden-section">
                     <div class="form-group">
                         <label for="socks5Addr">SOCKS5</label>
                         <div class="input-wrapper">
@@ -1480,7 +1598,7 @@ html.dark-mode .moon-icon {
                     </div>
                 </div>
 
-                <div id="httpSection" style="display:none">
+                <div id="httpSection" class="hidden-section">
                     <div class="form-group">
                         <label for="httpAddr">HTTP</label>
                         <div class="input-wrapper">
@@ -1513,7 +1631,7 @@ html.dark-mode .moon-icon {
                 <div class="form-group">
                     <label for="subAPI">订阅转换后端</label>
                     <div class="readonly-wrapper" onclick="openSubAPIModal()">
-                        <input type="text" id="subAPI" title="订阅转换后端" readonly placeholder="https://SUBAPI.cmliussss.net" style="cursor: pointer; background-color: #f9fafb;">
+                        <input type="text" id="subAPI" title="订阅转换后端" readonly placeholder="https://SUBAPI.cmliussss.net" class="subapi-input">
                     </div>
                 </div>
 
@@ -1548,11 +1666,11 @@ html.dark-mode .moon-icon {
                     <svg class="collapse-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
                 </div>
                 <div class="module-content">
-                    <div id="logsContainer" style="margin-bottom: 20px;">
-                        <div style="text-align: center; padding: 20px; color: #6b7280;">加载中...</div>
+                    <div id="logsContainer" class="logs-container">
+                        <div class="logs-loading">加载中...</div>
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 20px;">
-                        <p style="font-size: 12px; color: #9ca3af; margin: 0;">因为KV空间有限，所以只保留4MB的操作日志，当日志大小超过该容量会自动清理最老的日志记录。</p>
+                    <div class="logs-footer">
+                        <p class="logs-footer-text">因为KV空间有限，所以只保留4MB的操作日志，当日志大小超过该容量会自动清理最老的日志记录。</p>
                         <button type="button" class="btn btn-primary btn-all-logs" onclick="showAllLogs()">全部日志</button>
                     </div>
                 </div>
@@ -1604,7 +1722,7 @@ html.dark-mode .moon-icon {
 <div class="modal-overlay" id="qrcodeModal" onclick="closeQRCode(event)">
     <div class="modal" onclick="event.stopPropagation()">
         <button type="button" class="modal-close" onclick="closeQRCode()">×</button>
-        <div id="qrcodeContainer" style="margin:20px 0;display:flex;justify-content:center;align-items:center"></div>
+        <div id="qrcodeContainer" class="qrcode-container"></div>
         <button type="button" class="btn btn-primary btn-close-modal" onclick="closeQRCode()">关闭</button>
     </div>
 </div>
@@ -1612,10 +1730,10 @@ html.dark-mode .moon-icon {
 <!-- 重置配置确认弹窗 -->
 <div class="modal-overlay" id="resetModal" onclick="closeResetModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
-        <h2 style="color:#ef4444;margin-bottom:15px">⚠️ 重置配置</h2>
-        <p style="margin-bottom:20px;line-height:1.6">重置配置将会初始化所有设置，包括订阅生成、节点信息、反代配置等。此操作不可撤销，请谨慎操作。</p>
-        <p style="color:#ef4444;font-weight:bold;margin-bottom:20px">确定是否完全重置配置？</p>
-        <div style="display:flex;gap:10px;justify-content:space-between">
+        <h2 class="reset-modal-title">⚠️ 重置配置</h2>
+        <p class="reset-modal-description">重置配置将会初始化所有设置，包括订阅生成、节点信息、反代配置等。此操作不可撤销，请谨慎操作。</p>
+        <p class="reset-modal-confirm">确定是否完全重置配置？</p>
+        <div class="reset-modal-buttons">
             <button type="button" class="btn btn-primary btn-confirm-reset" onclick="confirmReset()">确定重置</button>
             <button type="button" class="btn btn-secondary" onclick="closeResetModal()">取消重置</button>
         </div>
@@ -1624,10 +1742,10 @@ html.dark-mode .moon-icon {
 
 <!-- 日志查看弹窗 -->
 <div class="modal-overlay" id="logsModal" onclick="closeLogsModal(event)">
-    <div class="modal" onclick="event.stopPropagation()" style="overflow-y: auto; width: 90vw; max-width: 1400px; margin: 0 auto;">
+    <div class="modal logs-modal" onclick="event.stopPropagation()">
         <button type="button" class="modal-close" onclick="closeLogsModal()">×</button>
-        <h2 style="margin-bottom: 20px;">📋 所有操作日志</h2>
-        <div id="allLogsContainer" style="max-height: 70vh; overflow-y: auto; overflow-x: auto;"></div>
+        <h2 class="logs-modal-title">📋 所有操作日志</h2>
+        <div id="allLogsContainer" class="logs-all-container"></div>
         <button type="button" class="btn btn-primary btn-close-modal" onclick="closeLogsModal()">关闭</button>
     </div>
 </div>
@@ -1636,13 +1754,13 @@ html.dark-mode .moon-icon {
 <div class="modal-overlay" id="subAPIModal" onclick="closeSubAPIModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
         <button type="button" class="modal-close" onclick="closeSubAPIModal()">×</button>
-        <h2 style="margin-bottom: 20px;">⚙️ 订阅转换后端</h2>
-        <div class="form-group" style="grid-template-columns: 1fr;">
+        <h2 class="subapi-modal-title">⚙️ 订阅转换后端</h2>
+        <div class="form-group subapi-form-group">
             <label>订阅转换后端地址</label>
             <input type="text" id="testSubAPIInput" placeholder="输入订阅转换后端地址">
         </div>
-        <div id="subAPIStatus" style="margin: 15px 0; padding: 12px 16px; border-radius: 8px; display: none;"></div>
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <div id="subAPIStatus" class="subapi-status"></div>
+        <div class="subapi-buttons">
             <button type="button" class="btn btn-primary btn-test-api" onclick="testSubAPI()">可用性验证</button>
             <button type="button" class="btn btn-primary btn-confirm-api" id="subAPIConfirmBtn" onclick="confirmSubAPI()" disabled>确定</button>
             <button type="button" class="btn btn-secondary btn-cancel-api" onclick="closeSubAPIModal()">取消</button>
