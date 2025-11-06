@@ -3215,7 +3215,18 @@
 
                     <div id="customIPSection" class="form-group hidden-section">
                         <label for="customIPs">自定义优选地址</label>
-                        <textarea id="customIPs" title="自定义优选地址" placeholder="每行一个地址，格式: IP[:端口]#备注"
+                        <textarea id="customIPs" title="自定义优选地址" placeholder="注意：
+每行一个地址，如：地址:端口#备注
+IPv6地址需要用中括号括起来，如：[2606:4700::]:2053
+端口不写，默认为 443 端口，如：www.visa.cn#优选域名
+
+示例：
+www.visa.cn#优选域名
+127.0.0.1:1234#CFnat
+[2606:4700::]:2053#IPv6
+
+API示例：
+https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesapi.txt"
                             onchange="markModified('sub')"></textarea>
                     </div>
 
