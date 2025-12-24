@@ -8742,7 +8742,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     color = '#ef4444'; // 201ms以上红色
                 }
 
-                return `<div class="optimize-result-item" style="color: ${color}; font-weight: bold;">${r.ip}:${r.port}#${r.remark} ${r.type} ${r.time}ms</div>`;
+                return `<div class="optimize-result-item" style="color: ${color}; font-weight: bold;">${r.ip}:${r.port}#${r.remark} ${r.type}</div>`;
             }).join('');
 
             let finalHtml = html;
@@ -8773,7 +8773,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 只保存前16个
             const resultsToSave = allResults.slice(0, 16);
             // 修改格式：包含国家、类型和时间信息
-            const newContent = resultsToSave.map(r => `${r.ip}:${r.port}#${r.remark}|${r.type}|${r.time}ms`).join('\n');
+            const newContent = resultsToSave.map(r => `${r.ip}:${r.port}#${r.remark}|${r.type}`).join('\n');
             console.log(`[在线优选] 成功: ${currentSelectedCountry} 保存 ${resultsToSave.length} 个 IP（总共 ${allResults.length} 个）`);
 
             const textarea = document.getElementById('customIPs');
