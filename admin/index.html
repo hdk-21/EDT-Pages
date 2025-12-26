@@ -4717,7 +4717,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             <!-- 进度条 -->
             <div class="optimize-progress-bar hidden-section" id="optimizeProgressBar">
                 <div class="optimize-progress-fill" id="optimizeProgressFill"></div>
-                <div class="optimize-progress-text" id="optimizeProgressText">0/512 (0.00%) - 成功: 0, 失败: 0</div>
+                <div class="optimize-progress-text" id="optimizeProgressText">0/1024 (0.00%) - 成功: 0, 失败: 0</div>
             </div>
 
             <!-- 结果选项卡 -->
@@ -8151,7 +8151,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const progressText = document.getElementById('optimizeProgressText');
             progressBar.classList.remove('hidden-section');
             progressFill.style.width = '0%';
-            progressText.textContent = '0/512 (0.00%)';
+            progressText.textContent = '0/1024 (0.00%)';
 
             document.getElementById('optimizeResultsTabs').classList.add('hidden-section');
             document.getElementById('optimizeResultsContent').classList.add('hidden-section');
@@ -8359,10 +8359,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             console.log(`[在线优选] 结果: 匹配端口=${targetPort} 的 IP 数量=${filteredIPs.length}`);
 
-            // 如果超过512个，随机选择512个
-            if (filteredIPs.length > 512) {
-                console.log('[在线优选] 提示: IP 数量超过 512，将随机选择 512 个');
-                return shuffleArray(filteredIPs).slice(0, 512);
+            // 如果超过 1024 个，随机选择 1024 个
+            if (filteredIPs.length > 1024) {
+                console.log('[在线优选] 提示: IP 数量超过 1024，将随机选择 1024 个');
+                return shuffleArray(filteredIPs).slice(0, 1024);
             }
 
             return filteredIPs;
@@ -8376,7 +8376,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             console.log(`[在线优选] 调试: CIDR 列表数量=${cidrs.length}`);
 
             const ips = [];
-            const targetCount = 512;
+            const targetCount = 1024;
 
             while (ips.length < targetCount && cidrs.length > 0) {
                 for (const cidr of cidrs) {
