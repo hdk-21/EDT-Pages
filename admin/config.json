@@ -15,6 +15,8 @@
   "启用0RTT": true,
   "TLS分片": "Shadowrocket",
   "随机路径": false,
+  "ECH": false,
+  "Fingerprint": "chrome",
   "优选订阅生成": {
     "local": true,
     "本地IP库": {
@@ -55,11 +57,13 @@
     "GlobalAPIKey": null,
     "AccountID": "6d7***************************90",
     "APIToken": "duN***********************************fs",
+    "UsageAPI": null,
     "Usage": {
       "success": true,
       "pages": 10900,
       "workers": 9670,
-      "total": 20510
+      "total": 20510,
+      "max": 100000
     }
   },
   "PATH": "/",

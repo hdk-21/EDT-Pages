@@ -4073,7 +4073,7 @@
                                 </div>
                                 <div class="cf-stat-item">
                                     <div class="cf-stat-label">日配额</div>
-                                    <div class="cf-stat-value cf-value-orange">100,000</div>
+                                    <div class="cf-stat-value cf-value-orange" id="cfDailyQuota">100,000</div>
                                 </div>
                             </div>
                         </div>
@@ -4311,7 +4311,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         <button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn"
                             onclick="openOnlineOptimizeModal()">在线优选</button>
                         <button type="button" class="btn btn-api-optimize hidden-section" id="apiOptimizeBtn"
-                            onclick="openAPIOptimizeModal()">优选API</button>
+                            onclick="openAPIOptimizeModal()">订阅接口</button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary" onclick="cancelEdit('sub')" disabled
                                 id="cancelSubBtn">取消</button>
@@ -4359,6 +4359,23 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                             <option value="trojan">Trojan</option>
                         </select>
                     </div>
+
+                    <div class="form-group" id="fingerprintGroup">
+                        <label for="fingerprint">指纹伪装</label>
+                        <select id="fingerprint" title="浏览器指纹" onchange="handleFingerprintChange(); markModified('config')">
+                            <option value="chrome">chrome（支持ECH）</option>
+                            <option value="firefox">firefox（支持ECH）</option>
+                            <option value="safari">safari</option>
+                            <option value="ios">ios</option>
+                            <option value="android">android</option>
+                            <option value="edge">edge</option>
+                            <option value="360">360</option>
+                            <option value="qq">qq</option>
+                            <option value="random">random（支持ECH）</option>
+                            <option value="randomized">randomized</option>
+                        </select>
+                    </div>
+
                     <!--- 节点配置 
                 <div class="form-group">
                     <label>传输协议</label>
@@ -4419,6 +4436,17 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                                         onchange="handleTLSFragmentChange('Happ'); markModified('config')">
                                     <label for="tlsFragmentHapp" class="checkbox-label"
                                         title="Happ客户端专用的TLS分片功能">启用分片(Happ)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="enableECHGroup" style="display: none;">
+                            <div class="input-wrapper">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="enableECH" title="启用ECH可以避免域名阻断-1现象，但是节点有效期大幅缩短，需要频繁更新订阅！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
+                                        onchange="markModified('config')">
+                                    <label for="enableECH" class="checkbox-label"
+                                        title="启用ECH可以避免域名阻断-1现象，但是节点有效期大幅缩短，需要频繁更新订阅！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用ECH(实验性质)</label>
                                 </div>
                             </div>
                         </div>
@@ -4809,6 +4837,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             <div class="form-group subapi-form-group">
                 <label>请求方案</label>
                 <select id="cloudflareAuthMethod" title="请求方案" onchange="updateCloudflareAuthMethod()">
+                    <option id="usageapiOption" value="usageapi">UsageAPI</option>
                     <option value="accountid">Account ID + API Token</option>
                     <option value="email">Email + Global API Key</option>
                 </select>
@@ -4837,6 +4866,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     <input type="password" id="cloudflareAPIToken" placeholder="输入API Token">
                     <small style="font-size: 12px; color: #9ca3af; margin-top: 6px; display: block;">💡 API令牌权限 使用
                         "阅读分析数据和日志" 模板即可</small>
+                </div>
+            </div>
+
+            <!-- UsageAPI 方案 -->
+            <div id="cloudflareUsageAPISection" class="hidden-section">
+                <div class="form-group subapi-form-group">
+                    <label>UsageAPI地址</label>
+                    <input type="text" id="cloudflareUsageAPI"
+                        placeholder="https://usage-panel.xxx.workers.dev/usage.json?token=xxx">
+                    <small style="font-size: 12px; color: #9ca3af; margin-top: 6px; display: block;">💡 支持多账号汇总，可通过部署 <a
+                            href="https://github.com/cmliu/CF-Workers-UsagePanel" target="_blank" rel="noopener"
+                            style="color: #3b82f6; text-decoration: none;">UsagePanel</a> 项目获取 UsageAPI 地址</small>
                 </div>
             </div>
 
@@ -4931,14 +4972,14 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
     <div class="modal-overlay" id="apiOptimizeModal">
         <div class="modal api-optimize-modal" onclick="event.stopPropagation()">
             <button type="button" class="modal-close" onclick="closeAPIOptimizeModal()">×</button>
-            <h2 class="api-optimize-modal-title">🔌 优选API</h2>
+            <h2 class="api-optimize-modal-title">🔌 订阅接口</h2>
 
             <!-- API URL 输入 -->
             <div class="api-form-group">
                 <div class="api-form-row">
                     <label>API URL:</label>
-                    <input type="text" id="apiOptimizeURL" placeholder="输入API接口URL" title="API接口URL"
-                        oninput="autoConvertGitHubURL(); autoDetectPortFromURL()">
+                    <input type="text" id="apiOptimizeURL" placeholder="请输入 优选API地址 或 需要汇聚的订阅地址"
+                        title="请输入 优选API地址 或 需要汇聚的订阅地址" oninput="autoConvertGitHubURL(); autoDetectPortFromURL()">
                 </div>
             </div>
 
@@ -4954,8 +4995,14 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             <!-- 结果显示区域 -->
             <div class="api-results-container">
                 <label class="api-results-label">接口结果:</label>
-                <textarea id="apiOptimizeResults" class="api-results-textarea" readonly
-                    placeholder="接口返回结果将显示在这里，每行一个地址"></textarea>
+                <div class="line-editor" id="apiResultsEditor">
+                    <div class="gutter" aria-hidden="true"></div>
+                    <div class="editor-area">
+                        <pre class="mirror" aria-hidden="true"></pre>
+                        <textarea id="apiOptimizeResults" title="API接口结果" placeholder="接口返回结果将显示在这里，每行一个地址"
+                            readonly></textarea>
+                    </div>
+                </div>
             </div>
 
             <!-- 按钮组 -->
@@ -5479,6 +5526,17 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 updateCloudflareButtonStates(false);
             }
 
+            // 检查 CF.UsageAPI 字段是否存在，向下兼容旧版本
+            const usageapiOption = document.getElementById('usageapiOption');
+            if (usageapiOption) {
+                // 如果 CF.UsageAPI 字段不存在（旧版本），隐藏 UsageAPI 选项
+                if (currentConfig.CF?.UsageAPI === undefined) {
+                    usageapiOption.style.display = 'none';
+                } else {
+                    usageapiOption.style.display = '';
+                }
+            }
+
             // 订阅链接
             const token = currentConfig.优选订阅生成?.TOKEN;
             const host = window.location.host;
@@ -5538,6 +5596,15 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             //document.getElementById('transport').value = currentConfig.传输协议 || 'ws';
             document.getElementById('skipVerify').checked = currentConfig.跳过证书验证 || false;
 
+            // 检查Fingerprint字段是否存在
+            const fingerprintGroup = document.getElementById('fingerprintGroup');
+            const fingerprintSelect = document.getElementById('fingerprint');
+            if (currentConfig['Fingerprint'] == undefined) {
+                fingerprintGroup.style.setProperty('display', 'none', 'important');
+            } else {
+                fingerprintSelect.value = currentConfig['Fingerprint'] || 'chrome';
+            }
+
             // 检查随机路径字段是否存在
             const randomPathGroup = document.getElementById('randomPathGroup');
             const randomPathCheckbox = document.getElementById('randomPath');
@@ -5572,6 +5639,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             } else {
                 tlsFragmentGroup.style.setProperty('display', 'none', 'important');
                 tlsFragmentHappGroup.style.setProperty('display', 'none', 'important');
+            }
+
+            // 检查ECH字段是否存在
+            const enableECHGroup = document.getElementById('enableECHGroup');
+            const enableECHCheckbox = document.getElementById('enableECH');
+            if (currentConfig['ECH'] !== undefined) {
+                enableECHGroup.style.display = 'flex';
+                enableECHCheckbox.checked = currentConfig['ECH'] || false;
+                // 根据Fingerprint值初始化ECH选项的禁用状态
+                updateECHOptionState();
+            } else {
+                enableECHGroup.style.display = 'none';
             }
 
             // 反代落地设置
@@ -5637,11 +5716,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const workers = cfUsage.workers || 0;
             const pages = cfUsage.pages || 0;
             const total = cfUsage.total || 0;
-            const dailyQuota = 100000;
+            const dailyQuota = cfUsage.max || 100000;
 
             // 更新显示数值
             document.getElementById('cfWorkerCount').textContent = workers.toLocaleString();
             document.getElementById('cfPagesCount').textContent = pages.toLocaleString();
+            document.getElementById('cfDailyQuota').textContent = dailyQuota.toLocaleString();
             document.getElementById('cfTotalDisplay').textContent = total.toLocaleString();
 
             // 计算百分比
@@ -5729,7 +5809,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 }
             }
 
-            // 显示或隐藏在线优选和优选API按钮（仅在自定义优选模式下显示）
+            // 显示或隐藏在线优选和订阅接口按钮（仅在自定义优选模式下显示）
             const onlineOptimizeBtn = document.getElementById('onlineOptimizeBtn');
             const apiOptimizeBtn = document.getElementById('apiOptimizeBtn');
             if (onlineOptimizeBtn) {
@@ -5831,6 +5911,45 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 transport.disabled = false;
             }
             */
+        }
+
+        // 处理浏览器指纹变化，联动ECH选项
+        function handleFingerprintChange() {
+            updateECHOptionState();
+        }
+
+        // 更新ECH选项的状态（禁用/启用）
+        function updateECHOptionState() {
+            const fingerprint = document.getElementById('fingerprint').value;
+            const enableECHCheckbox = document.getElementById('enableECH');
+            const enableECHLabel = document.querySelector('label[for="enableECH"]');
+            const enableECHGroup = document.getElementById('enableECHGroup');
+            
+            // 支持ECH的指纹类型
+            const supportECH = ['chrome', 'firefox', 'random'];
+            
+            if (enableECHGroup && enableECHCheckbox) {
+                if (supportECH.includes(fingerprint)) {
+                    // 启用ECH选项
+                    enableECHCheckbox.disabled = false;
+                    enableECHGroup.style.opacity = '1';
+                    enableECHGroup.style.pointerEvents = 'auto';
+                    if (enableECHLabel) {
+                        enableECHLabel.style.opacity = '1';
+                        enableECHLabel.style.cursor = 'pointer';
+                    }
+                } else {
+                    // 禁用ECH选项，取消勾选，变成灰色
+                    enableECHCheckbox.disabled = true;
+                    enableECHCheckbox.checked = false;
+                    enableECHGroup.style.opacity = '0.5';
+                    enableECHGroup.style.pointerEvents = 'none';
+                    if (enableECHLabel) {
+                        enableECHLabel.style.opacity = '0.5';
+                        enableECHLabel.style.cursor = 'not-allowed';
+                    }
+                }
+            }
         }
 
         // 处理PROXYIP地址
@@ -6371,6 +6490,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             //currentConfig.传输协议 = currentConfig.协议类型 === 'trojan' ? 'ws' : document.getElementById('transport').value;
             currentConfig.跳过证书验证 = document.getElementById('skipVerify').checked;
 
+            // 保存Fingerprint（如果字段存在）
+            if (currentConfig['Fingerprint'] !== undefined) {
+                currentConfig['Fingerprint'] = document.getElementById('fingerprint').value;
+            }
+
             // 保存随机路径（如果字段存在）
             if (currentConfig['随机路径'] !== undefined) {
                 currentConfig['随机路径'] = document.getElementById('randomPath').checked;
@@ -6393,6 +6517,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 } else {
                     currentConfig['TLS分片'] = null;
                 }
+            }
+
+            // 保存ECH（如果字段存在）
+            if (currentConfig['ECH'] !== undefined) {
+                currentConfig['ECH'] = document.getElementById('enableECH').checked;
             }
 
             await saveConfigToServer('config');
@@ -6621,6 +6750,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 if (currentConfig['TLS分片'] !== undefined) {
                     document.getElementById('tlsFragmentShadowrocket').checked = currentConfig['TLS分片'] === 'Shadowrocket';
                     document.getElementById('tlsFragmentHapp').checked = currentConfig['TLS分片'] === 'Happ';
+                }
+
+                // 重置ECH（如果字段存在）
+                if (currentConfig['ECH'] !== undefined) {
+                    document.getElementById('enableECH').checked = currentConfig['ECH'] || false;
                 }
 
                 updateProtocol();
@@ -7582,6 +7716,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             document.getElementById('cloudflareGlobalAPIKey').value = '';
             document.getElementById('cloudflareAccountID').value = '';
             document.getElementById('cloudflareAPIToken').value = '';
+            document.getElementById('cloudflareUsageAPI').value = '';
 
             // 重置状态和保存按钮
             document.getElementById('cloudflareStatus').style.display = 'none';
@@ -7598,12 +7733,15 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 隐藏所有方案的输入框
             document.getElementById('cloudflareEmailSection').style.display = 'none';
             document.getElementById('cloudflareAccountIDSection').style.display = 'none';
+            document.getElementById('cloudflareUsageAPISection').style.display = 'none';
 
             // 显示选中方案的输入框
             if (method === 'email') {
                 document.getElementById('cloudflareEmailSection').style.display = 'block';
             } else if (method === 'accountid') {
                 document.getElementById('cloudflareAccountIDSection').style.display = 'block';
+            } else if (method === 'usageapi') {
+                document.getElementById('cloudflareUsageAPISection').style.display = 'block';
             }
 
             // 切换方案时重置验证状态和保存按钮
@@ -7624,6 +7762,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             document.getElementById('cloudflareGlobalAPIKey').value = '';
             document.getElementById('cloudflareAccountID').value = '';
             document.getElementById('cloudflareAPIToken').value = '';
+            document.getElementById('cloudflareUsageAPI').value = '';
             document.getElementById('cloudflareStatus').style.display = 'none';
             document.getElementById('cloudflareStatus').textContent = '';
         }
@@ -7631,7 +7770,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         // 测试 Cloudflare 连接
         async function testCloudflareConfig() {
             const method = document.getElementById('cloudflareAuthMethod').value;
-            let email = '', globalAPIKey = '', accountID = '', apiToken = '';
+            let email = '', globalAPIKey = '', accountID = '', apiToken = '', usageAPI = '';
 
             const statusEl = document.getElementById('cloudflareStatus');
             const confirmBtn = document.getElementById('cloudflareConfirmBtn');
@@ -7666,6 +7805,19 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     confirmBtn.dataset.testPassed = 'false';
                     return;
                 }
+            } else if (method === 'usageapi') {
+                usageAPI = document.getElementById('cloudflareUsageAPI').value.trim();
+
+                if (!usageAPI) {
+                    statusEl.textContent = '❌ 请填写 UsageAPI 地址';
+                    statusEl.style.display = 'block';
+                    statusEl.style.background = 'linear-gradient(135deg, #ef4444 0, #dc2626 100%)';
+                    statusEl.style.color = '#fff';
+                    confirmBtn.disabled = true;
+                    confirmBtn.style.opacity = '0.5';
+                    confirmBtn.dataset.testPassed = 'false';
+                    return;
+                }
             }
 
             try {
@@ -7675,17 +7827,24 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 statusEl.style.background = 'linear-gradient(135deg, #3b82f6 0, #1d4ed8 100%)';
                 statusEl.style.color = '#fff';
 
-                // 构建请求 URL
-                let queryParams = new URLSearchParams();
-                if (method === 'email') {
-                    queryParams.append('Email', email);
-                    queryParams.append('GlobalAPIKey', globalAPIKey);
-                } else if (method === 'accountid') {
-                    queryParams.append('AccountID', accountID);
-                    queryParams.append('APIToken', apiToken);
-                }
+                let response;
 
-                const response = await fetch('/admin/getCloudflareUsage?' + queryParams.toString());
+                if (method === 'usageapi') {
+                    // UsageAPI 方案：直接请求外部 API
+                    response = await fetch(usageAPI);
+                } else {
+                    // 构建请求 URL
+                    let queryParams = new URLSearchParams();
+                    if (method === 'email') {
+                        queryParams.append('Email', email);
+                        queryParams.append('GlobalAPIKey', globalAPIKey);
+                    } else if (method === 'accountid') {
+                        queryParams.append('AccountID', accountID);
+                        queryParams.append('APIToken', apiToken);
+                    }
+
+                    response = await fetch('/admin/getCloudflareUsage?' + queryParams.toString());
+                }
 
                 if (!response.ok) {
                     throw new Error('请求失败 (HTTP ' + response.status + ')');
@@ -7696,8 +7855,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 if (data.success) {
                     // 验证成功
                     statusEl.style.background = 'linear-gradient(135deg, #10b981 0, #059669 100%)';
-                    const percentage = (data.total / 100000 * 100).toFixed(2);
-                    statusEl.textContent = `✅ 验证成功！ 今天的请求配额: ${data.total}/100000 (${percentage}%)`;
+                    const maxQuota = data.max || 100000;
+                    const percentage = (data.total / maxQuota * 100).toFixed(2);
+                    statusEl.textContent = `✅ 验证成功！ 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
                     confirmBtn.disabled = false;
                     confirmBtn.style.opacity = '1';
                     confirmBtn.dataset.testPassed = 'true';
@@ -7708,10 +7868,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     confirmBtn.dataset.globalAPIKey = globalAPIKey;
                     confirmBtn.dataset.accountID = accountID;
                     confirmBtn.dataset.apiToken = apiToken;
+                    confirmBtn.dataset.usageAPI = usageAPI;
                 } else {
                     // 验证失败
                     statusEl.style.background = 'linear-gradient(135deg, #ef4444 0, #dc2626 100%)';
-                    statusEl.textContent = '❌ 验证失败：凭证无效或无权限';
+                    statusEl.textContent = '❌ 验证失败：' + (data.msg || '凭证无效或无权限');
                     confirmBtn.disabled = true;
                     confirmBtn.style.opacity = '0.5';
                     confirmBtn.dataset.testPassed = 'false';
@@ -7742,18 +7903,31 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const globalAPIKey = confirmBtn.dataset.globalAPIKey || '';
             const accountID = confirmBtn.dataset.accountID || '';
             const apiToken = confirmBtn.dataset.apiToken || '';
+            const usageAPI = confirmBtn.dataset.usageAPI || '';
 
             try {
                 confirmBtn.disabled = true;
                 confirmBtn.textContent = '保存中...';
 
                 // 构建请求体
-                const payload = {
-                    Email: method === 'email' ? email : null,
-                    GlobalAPIKey: method === 'email' ? globalAPIKey : null,
-                    AccountID: method === 'accountid' ? accountID : null,
-                    APIToken: method === 'accountid' ? apiToken : null
-                };
+                let payload;
+                if (method === 'usageapi') {
+                    payload = {
+                        Email: null,
+                        GlobalAPIKey: null,
+                        AccountID: null,
+                        APIToken: null,
+                        UsageAPI: usageAPI
+                    };
+                } else {
+                    payload = {
+                        Email: method === 'email' ? email : null,
+                        GlobalAPIKey: method === 'email' ? globalAPIKey : null,
+                        AccountID: method === 'accountid' ? accountID : null,
+                        APIToken: method === 'accountid' ? apiToken : null,
+                        UsageAPI: null
+                    };
+                }
 
                 // 提交到后端
                 const response = await fetch('/admin/cf.json', {
@@ -8058,6 +8232,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             document.getElementById('apiOptimizeResults').value = '';
             document.getElementById('btnAppendAPI').disabled = true;
             document.getElementById('btnAppendResults').disabled = true;
+            // 初始化line-editor
+            initLineEditor('apiOptimizeResults');
         }
 
         // 关闭API优选模态框
@@ -8225,12 +8401,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     // 接口可用
                     const results = data.data.join('\n');
                     document.getElementById('apiOptimizeResults').value = results;
+                    // 刷新line-editor行数
+                    const resultsTA = document.getElementById('apiOptimizeResults');
+                    if (resultsTA._refreshLineEditor) {
+                        resultsTA._refreshLineEditor();
+                    }
                     document.getElementById('btnAppendAPI').disabled = false;
                     document.getElementById('btnAppendResults').disabled = false;
                     showToast('✅ API接口验证成功！', 'success');
                 } else {
                     // 接口不可用
                     document.getElementById('apiOptimizeResults').value = '❌ 接口不可用，请检查URL和端口是否正确';
+                    // 刷新line-editor行数
+                    const resultsTA = document.getElementById('apiOptimizeResults');
+                    if (resultsTA._refreshLineEditor) {
+                        resultsTA._refreshLineEditor();
+                    }
                     document.getElementById('btnAppendAPI').disabled = true;
                     document.getElementById('btnAppendResults').disabled = true;
                     showToast('❌ API接口验证失败，请检查接口', 'error');
@@ -8238,6 +8424,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             } catch (error) {
                 console.error('API验证错误:', error);
                 document.getElementById('apiOptimizeResults').value = `❌ 验证出错: ${error.message}`;
+                // 刷新line-editor行数
+                const resultsTA = document.getElementById('apiOptimizeResults');
+                if (resultsTA._refreshLineEditor) {
+                    resultsTA._refreshLineEditor();
+                }
                 document.getElementById('btnAppendAPI').disabled = true;
                 document.getElementById('btnAppendResults').disabled = true;
                 showToast('❌ 验证出错，请稍后重试', 'error');
@@ -8281,6 +8472,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 customIPsTextarea.value = completeURL;
             }
 
+            // 刷新line-editor行数
+            if (customIPsTextarea._refreshLineEditor) {
+                customIPsTextarea._refreshLineEditor();
+            }
+
             // 标记为已修改
             markModified('sub');
 
@@ -8306,6 +8502,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 customIPsTextarea.value = currentValue + '\n' + results;
             } else {
                 customIPsTextarea.value = results;
+            }
+
+            // 刷新line-editor行数
+            if (customIPsTextarea._refreshLineEditor) {
+                customIPsTextarea._refreshLineEditor();
             }
 
             // 标记为已修改
