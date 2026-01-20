@@ -2760,7 +2760,7 @@
 
         .network-cards-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 16px;
             margin-bottom: 10px;
             margin-top: 2px;
@@ -2873,6 +2873,10 @@
             margin-bottom: 8px;
             cursor: default;
             transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
         }
 
         html.dark-mode .ip-text {
@@ -2907,6 +2911,14 @@
             margin-bottom: 8px;
             font-size: 14px;
             color: #666;
+            min-width: 0;
+        }
+
+        .country-text {
+            color: var(--text-color-secondary);
+            font-size: 0.875rem;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         html.dark-mode .location-text {
@@ -2916,6 +2928,10 @@
         .country-text,
         .city-text {
             flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
 
         .network-tip {
@@ -4362,7 +4378,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                     <div class="form-group" id="fingerprintGroup">
                         <label for="fingerprint">指纹伪装</label>
-                        <select id="fingerprint" title="浏览器指纹" onchange="handleFingerprintChange(); markModified('config')">
+                        <select id="fingerprint" title="浏览器指纹"
+                            onchange="handleFingerprintChange(); markModified('config')">
                             <option value="chrome">chrome（支持ECH）</option>
                             <option value="firefox">firefox（支持ECH）</option>
                             <option value="safari">safari</option>
@@ -4443,7 +4460,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         <div class="form-group" id="enableECHGroup" style="display: none;">
                             <div class="input-wrapper">
                                 <div class="checkbox-group">
-                                    <input type="checkbox" id="enableECH" title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
+                                    <input type="checkbox" id="enableECH"
+                                        title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
                                         onchange="markModified('config')">
                                     <label for="enableECH" class="checkbox-label"
                                         title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用ECH(实验性质)</label>
@@ -5924,10 +5942,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const enableECHCheckbox = document.getElementById('enableECH');
             const enableECHLabel = document.querySelector('label[for="enableECH"]');
             const enableECHGroup = document.getElementById('enableECHGroup');
-            
+
             // 支持ECH的指纹类型
             const supportECH = ['chrome', 'firefox', 'random'];
-            
+
             if (enableECHGroup && enableECHCheckbox) {
                 if (supportECH.includes(fingerprint)) {
                     // 启用ECH选项
