@@ -5789,7 +5789,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
     </div>
 
     <!-- 获取更多 PROXYIP 弹窗 -->
-    <div class="modal-overlay" id="getMoreProxyIPModal" onclick="closeGetMoreProxyIPModal(event)">
+    <div class="modal-overlay" id="getMoreProxyIPModal">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 420px; text-align: left;">
             <button type="button" class="modal-close" onclick="closeGetMoreProxyIPModal()">×</button>
             <h2 class="section-title" style="margin-bottom: 15px; text-align: center;">🗺️ 探索更多 PROXYIP</h2>
@@ -5802,36 +5802,46 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 <label for="proxyRegionSelect">🏳️‍🌈 选择目标地区</label>
                 <div class="input-wrapper">
                     <select id="proxyRegionSelect" onchange="onProxyRegionChange()" style="padding-left: 16px;">
-                        <option value="custom">✍️ 自定义地区代码</option>
-                        <option disabled>──────────</option>
-                        <optgroup label="🌏 亚洲 / Asia">
-                            <option value="HK">HK - 香港 (HongKong)</option>
-                            <option value="TW">TW - 台湾 (Taiwan)</option>
-                            <option value="KR">KR - 韩国 (Korea)</option>
-                            <option value="JP">JP - 日本 (Japan)</option>
-                            <option value="SG">SG - 新加坡 (Singapore)</option>
+                        <option value="custom">✍️ 自定义地区</option>
+                        <optgroup label="🌏 亚洲 / AS">
+                            <option value="HK">🇭🇰 香港</option>
+                            <option value="TW">🇨🇳 台湾</option>
+                            <option value="KR">🇰🇷 韩国</option>
+                            <option value="JP">🇯🇵 日本</option>
+                            <option value="SG">🇸🇬 新加坡</option>
+                            <option value="IN">🇮🇳 印度</option>
                         </optgroup>
-                        <optgroup label="🌎 北美 / North America">
-                            <option value="US">US - 美国 (United States)</option>
-                            <option value="CA">CA - 加拿大 (Canada)</option>
+                        <optgroup label="🌎 北美 / NA">
+                            <option value="US">🇺🇸 美国</option>
+                            <option value="CA">🇨🇦 加拿大</option>
                         </optgroup>
-                        <optgroup label="🌍 欧洲 / Europe">
-                            <option value="GB">GB - 英国 (United Kingdom)</option>
-                            <option value="DE">DE - 德国 (Germany)</option>
-                            <option value="FR">FR - 法国 (France)</option>
+                        <optgroup label="🌍 欧洲 / EU">
+                            <option value="GB">🇬🇧 英国</option>
+                            <option value="DE">🇩🇪 德国</option>
+                            <option value="FR">🇫🇷 法国</option>
                         </optgroup>
-                        <optgroup label="🌏 大洋洲 / Oceania">
-                            <option value="AU">AU - 澳大利亚 (Australia)</option>
+                        <optgroup label="🌏 大洋洲 / OC">
+                            <option value="AU">🇦🇺 澳大利亚</option>
                         </optgroup>
                     </select>
                 </div>
             </div>
 
-            <div class="form-group" id="customRegionInputGroup" style="display: none;">
-                <label for="customRegionInput">⌨️ 输入国家代码</label>
+            <div class="form-group" id="customRegionInputGroup">
+                <label for="customRegionInput">⌨️ 输入地区代码</label>
                 <div class="input-wrapper">
                     <input type="text" id="customRegionInput" placeholder="请输入两位字母代码，例如: US" maxlength="2"
-                        style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();">
+                        style="text-transform: uppercase;" disabled oninput="this.value = this.value.toUpperCase();">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="proxyPortSelect">🔌 选择目标端口</label>
+                <div class="input-wrapper">
+                    <select id="proxyPortSelect" style="padding-left: 16px;">
+                        <option value="443">443</option>
+                        <option value="nonstandard">非标</option>
+                    </select>
                 </div>
             </div>
 
@@ -6342,7 +6352,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const nodeHostInput = document.getElementById('nodeHost');
             if (hasMultipleHosts) {
                 // 如果存在 HOSTS 数组，用逗号连接显示所有 host
-                nodeHostInput.value = currentConfig.HOSTS.join(',');
+                nodeHostInput.value = currentConfig.HOSTS.join('、');
                 // 添加可点击样式和事件
                 nodeHostInput.classList.add('nodeHost-clickable');
                 nodeHostInput.title = '点击 可编辑多个节点域名';
@@ -7409,7 +7419,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             currentConfig.HOSTS = items;
 
             // 更新输入框显示（用逗号连接）
-            nodeHostInput.value = items.join(',');
+            nodeHostInput.value = items.join('、');
 
             // 关闭模态框
             closeHostsEditModal();
@@ -11328,25 +11338,31 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             onProxyRegionChange();
         }
 
-        function closeGetMoreProxyIPModal(event) {
-            if (event && event.target !== event.currentTarget) return;
+        function closeGetMoreProxyIPModal() {
             document.getElementById('getMoreProxyIPModal').classList.remove('show');
         }
 
         function onProxyRegionChange() {
             const select = document.getElementById('proxyRegionSelect');
-            const customGroup = document.getElementById('customRegionInputGroup');
+            const customInput = document.getElementById('customRegionInput');
 
             if (select.value === 'custom') {
-                customGroup.style.display = 'block';
+                // 自定义模式：启用输入
+                customInput.value = '';
+                customInput.disabled = false;
+                customInput.focus();
             } else {
-                customGroup.style.display = 'none';
+                // 预选地区模式：禁用输入，自动填充地区代码
+                customInput.value = select.value;
+                customInput.disabled = true;
             }
         }
 
         function openFOFA() {
             const select = document.getElementById('proxyRegionSelect');
+            const portSelect = document.getElementById('proxyPortSelect');
             let region = select.value;
+            let port = portSelect.value;
 
             if (region === 'custom') {
                 const customInput = document.getElementById('customRegionInput');
@@ -11360,11 +11376,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 构建查询语句
             let query = '';
             // HK 和 TW 使用 region 字段，其他使用 country 字段
+            let regionQuery = '';
             if (region === 'HK' || region === 'TW') {
-                query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && region="${region}"`;
+                regionQuery = `region="${region}"`;
             } else {
-                query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && country="${region}"`;
+                regionQuery = `country="${region}"`;
             }
+            
+            // 根据端口选择构建查询
+            let portQuery = '';
+            if (port === '443') {
+                portQuery = `port="443"`;
+            } else if (port === 'nonstandard') {
+                portQuery = `(port!="80" && port!="8080" && port!="8880" && port!="2052" && port!="2082" && port!="2086" && port!="2095" && port!="443" && port!="2053" && port!="2083" && port!="2087" && port!="2096" && port!="8443")`;
+            }
+            
+            query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && ${regionQuery} && ${portQuery}`;
 
             // Base64 编码
             const qbase64 = btoa(query);
@@ -11378,7 +11405,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
         function open360Quake() {
             const select = document.getElementById('proxyRegionSelect');
+            const portSelect = document.getElementById('proxyPortSelect');
             let region = select.value;
+            let port = portSelect.value;
 
             if (region === 'custom') {
                 const customInput = document.getElementById('customRegionInput');
@@ -11390,17 +11419,29 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
 
             // 基础查询语句
-            const baseQuery = `((app:"Cloudflare" AND header:"Forbidden" AND asn!=13335 AND asn!=209242) AND service: "http/ssl")`;
-            let query = '';
+            const baseQuery = `(app:"Cloudflare" AND header:"Forbidden" AND asn!=13335 AND asn!=209242 AND service: "http/ssl")`;
+            let regionQuery = '';
             
             // HK 和 TW 使用 province 字段，其他使用 country 字段
             if (region === 'HK') {
-                query = `${baseQuery} AND province: "HongKong"`;
+                regionQuery = `province: "HongKong"`;
             } else if (region === 'TW') {
-                query = `${baseQuery} AND province: "TaiWan"`;
+                regionQuery = `province: "TaiWan"`;
+            }  else if (region === 'MO') {
+                regionQuery = `province: "Macao"`;
             } else {
-                query = `${baseQuery} AND country: "${region}"`;
+                regionQuery = `country: "${region}"`;
             }
+            
+            // 根据端口选择构建查询
+            let portQuery = '';
+            if (port === '443') {
+                portQuery = `port: 443`;
+            } else if (port === 'nonstandard') {
+                portQuery = `NOT (port: 80 OR port: 8080 OR port: 8880 OR port: 2052 OR port: 2082 OR port: 2086 OR port: 2095 OR port: 443 OR port: 2053 OR port: 2083 OR port: 2087 OR port: 2096 OR port: 8443)`;
+            }
+            
+            let query = `${baseQuery} AND ${regionQuery} AND ${portQuery}`;
 
             // URL 编码
             const searchVal = encodeURIComponent(query);
