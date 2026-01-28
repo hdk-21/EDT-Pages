@@ -5835,6 +5835,16 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="proxyPortSelect">🔌 选择目标端口</label>
+                <div class="input-wrapper">
+                    <select id="proxyPortSelect" style="padding-left: 16px;">
+                        <option value="443">443</option>
+                        <option value="nonstandard">非标</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="btn-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
                 <button type="button" class="btn btn-fofa" onclick="openFOFA()" style="padding: 12px 16px; font-size: 14px; font-weight: 500; white-space: nowrap;">
                     FOFA 测绘
@@ -11345,7 +11355,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
         function openFOFA() {
             const select = document.getElementById('proxyRegionSelect');
+            const portSelect = document.getElementById('proxyPortSelect');
             let region = select.value;
+            let port = portSelect.value;
 
             if (region === 'custom') {
                 const customInput = document.getElementById('customRegionInput');
@@ -11359,11 +11371,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 构建查询语句
             let query = '';
             // HK 和 TW 使用 region 字段，其他使用 country 字段
+            let regionQuery = '';
             if (region === 'HK' || region === 'TW') {
-                query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && region="${region}"`;
+                regionQuery = `region="${region}"`;
             } else {
-                query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && country="${region}"`;
+                regionQuery = `country="${region}"`;
             }
+            
+            // 根据端口选择构建查询
+            let portQuery = '';
+            if (port === '443') {
+                portQuery = `port="443"`;
+            } else if (port === 'nonstandard') {
+                portQuery = `(port!="80" && port!="8080" && port!="8880" && port!="2052" && port!="2082" && port!="2086" && port!="2095" && port!="443" && port!="2053" && port!="2083" && port!="2087" && port!="2096" && port!="8443")`;
+            }
+            
+            query = `server=="cloudflare" && header="Forbidden" && asn!="13335" && asn!="209242" && ${regionQuery} && ${portQuery}`;
 
             // Base64 编码
             const qbase64 = btoa(query);
@@ -11377,7 +11400,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
         function open360Quake() {
             const select = document.getElementById('proxyRegionSelect');
+            const portSelect = document.getElementById('proxyPortSelect');
             let region = select.value;
+            let port = portSelect.value;
 
             if (region === 'custom') {
                 const customInput = document.getElementById('customRegionInput');
@@ -11389,17 +11414,27 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
 
             // 基础查询语句
-            const baseQuery = `((app:"Cloudflare" AND header:"Forbidden" AND asn!=13335 AND asn!=209242) AND service: "http/ssl")`;
-            let query = '';
+            const baseQuery = `(app:"Cloudflare" AND header:"Forbidden" AND asn!=13335 AND asn!=209242 AND service: "http/ssl")`;
+            let regionQuery = '';
             
             // HK 和 TW 使用 province 字段，其他使用 country 字段
             if (region === 'HK') {
-                query = `${baseQuery} AND province: "HongKong"`;
+                regionQuery = `province: "HongKong"`;
             } else if (region === 'TW') {
-                query = `${baseQuery} AND province: "TaiWan"`;
+                regionQuery = `province: "TaiWan"`;
             } else {
-                query = `${baseQuery} AND country: "${region}"`;
+                regionQuery = `country: "${region}"`;
             }
+            
+            // 根据端口选择构建查询
+            let portQuery = '';
+            if (port === '443') {
+                portQuery = `port: 443`;
+            } else if (port === 'nonstandard') {
+                portQuery = `NOT (port: 80 OR port: 8080 OR port: 8880 OR port: 2052 OR port: 2082 OR port: 2086 OR port: 2095 OR port: 443 OR port: 2053 OR port: 2083 OR port: 2087 OR port: 2096 OR port: 8443)`;
+            }
+            
+            let query = `${baseQuery} AND ${regionQuery} AND ${portQuery}`;
 
             // URL 编码
             const searchVal = encodeURIComponent(query);
