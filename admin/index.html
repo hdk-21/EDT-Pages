@@ -11694,7 +11694,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 url: 'https://raw.githubusercontent.com/EDT-Pages/Proxy-List/main/data/socks5.json',
                 description: 'SOCKS5列表',
                 inputId: 'socks5Addr',
-                verifySingleFunction: verifySingleSocks5
+                verifySingleFunction: (proxy) => verifySingleProxy(proxy, 'socks5')
             },
             http: {
                 modalId: 'exploreHTTPModal',
@@ -11710,7 +11710,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 url: 'https://raw.githubusercontent.com/EDT-Pages/Proxy-List/main/data/http.json',
                 description: 'HTTP列表',
                 inputId: 'httpAddr',
-                verifySingleFunction: verifySingleHTTP
+                verifySingleFunction: (proxy) => verifySingleProxy(proxy, 'http')
             }
         };
         
@@ -11769,55 +11769,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         }
 
         function verifySingleSocks5(proxy) {
-            return new Promise((resolve) => {
-                const { protocol, proxy: proxyUrl } = proxy;
-                const cleanProxy = proxyUrl.replace(protocol + '://', '');
-                const checkUrl = `/admin/check?${protocol}=${encodeURIComponent(cleanProxy)}&_t=${Date.now()}`;
-                
-                // 设置15秒超时
-                const timeoutId = setTimeout(() => {
-                    socks5VerificationStatus[proxyUrl] = {
-                        status: 'timeout',
-                        responseTime: null
-                    };
-                    updateSocks5Display();
-                    resolve();
-                }, 15000);
-                
-                socks5VerificationTimeouts[proxyUrl] = timeoutId;
-                
-                fetch(checkUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        clearTimeout(timeoutId);
-                        delete socks5VerificationTimeouts[proxyUrl];
-                        
-                        if (data.success) {
-                            socks5VerificationStatus[proxyUrl] = {
-                                status: 'success',
-                                responseTime: data.responseTime
-                            };
-                        } else {
-                            socks5VerificationStatus[proxyUrl] = {
-                                status: 'failed',
-                                responseTime: null
-                            };
-                        }
-                        updateSocks5Display();
-                        resolve();
-                    })
-                    .catch(error => {
-                        clearTimeout(timeoutId);
-                        delete socks5VerificationTimeouts[proxyUrl];
-                        
-                        socks5VerificationStatus[proxyUrl] = {
-                            status: 'failed',
-                            responseTime: null
-                        };
-                        updateSocks5Display();
-                        resolve();
-                    });
-            });
+            return verifySingleProxy(proxy, 'socks5');
         }
 
         function updateSocks5Display() {
@@ -12077,6 +12029,60 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
+        // 通用单个代理验证函数
+        function verifySingleProxy(proxy, type) {
+            return new Promise((resolve) => {
+                const config = proxyConfigs[type];
+                const { protocol, proxy: proxyUrl } = proxy;
+                const cleanProxy = proxyUrl.replace(protocol + '://', '');
+                const checkUrl = `/admin/check?${protocol}=${encodeURIComponent(cleanProxy)}&_t=${Date.now()}`;
+                
+                // 设置15秒超时
+                const timeoutId = setTimeout(() => {
+                    window[config.verificationStatus][proxyUrl] = {
+                        status: 'timeout',
+                        responseTime: null
+                    };
+                    updateProxyDisplay(type);
+                    resolve();
+                }, 15000);
+                
+                window[config.verificationTimeouts][proxyUrl] = timeoutId;
+                
+                fetch(checkUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        clearTimeout(timeoutId);
+                        delete window[config.verificationTimeouts][proxyUrl];
+                        
+                        if (data.success) {
+                            window[config.verificationStatus][proxyUrl] = {
+                                status: 'success',
+                                responseTime: data.responseTime
+                            };
+                        } else {
+                            window[config.verificationStatus][proxyUrl] = {
+                                status: 'failed',
+                                responseTime: null
+                            };
+                        }
+                        updateProxyDisplay(type);
+                        resolve();
+                    })
+                    .catch(error => {
+                        clearTimeout(timeoutId);
+                        delete window[config.verificationTimeouts][proxyUrl];
+                        
+                        window[config.verificationStatus][proxyUrl] = {
+                            status: 'failed',
+                            responseTime: null
+                        };
+                        updateProxyDisplay(type);
+                        resolve();
+                    });
+            });
+        }
+
         // ==================== HTTP 相关函数 ====================
         
         // 存储HTTP数据
@@ -12115,55 +12121,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         }
 
         function verifySingleHTTP(proxy) {
-            return new Promise((resolve) => {
-                const { protocol, proxy: proxyUrl } = proxy;
-                const cleanProxy = proxyUrl.replace(protocol + '://', '');
-                const checkUrl = `/admin/check?${protocol}=${encodeURIComponent(cleanProxy)}&_t=${Date.now()}`;
-                
-                // 设置15秒超时
-                const timeoutId = setTimeout(() => {
-                    httpVerificationStatus[proxyUrl] = {
-                        status: 'timeout',
-                        responseTime: null
-                    };
-                    updateHTTPDisplay();
-                    resolve();
-                }, 15000);
-                
-                httpVerificationTimeouts[proxyUrl] = timeoutId;
-                
-                fetch(checkUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        clearTimeout(timeoutId);
-                        delete httpVerificationTimeouts[proxyUrl];
-                        
-                        if (data.success) {
-                            httpVerificationStatus[proxyUrl] = {
-                                status: 'success',
-                                responseTime: data.responseTime
-                            };
-                        } else {
-                            httpVerificationStatus[proxyUrl] = {
-                                status: 'failed',
-                                responseTime: null
-                            };
-                        }
-                        updateHTTPDisplay();
-                        resolve();
-                    })
-                    .catch(error => {
-                        clearTimeout(timeoutId);
-                        delete httpVerificationTimeouts[proxyUrl];
-                        
-                        httpVerificationStatus[proxyUrl] = {
-                            status: 'failed',
-                            responseTime: null
-                        };
-                        updateHTTPDisplay();
-                        resolve();
-                    });
-            });
+            return verifySingleProxy(proxy, 'http');
         }
 
         function updateHTTPDisplay() {
