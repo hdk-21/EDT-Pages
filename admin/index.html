@@ -11851,6 +11851,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const select = document.getElementById(selectId);
             const proxies = countryMap[selectedCountry] || [];
 
+            // 保存当前选中的值
+            const currentValue = select.value;
+
             // 检查是否所有代理都验证完成
             const allVerified = proxies.every(p => {
                 const status = verificationStatus[p.proxy];
@@ -11901,6 +11904,14 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             });
 
             select.innerHTML = html;
+
+            // 恢复用户的选择（如果该选项仍然存在且有效）
+            if (currentValue && currentValue !== '') {
+                const optionExists = Array.from(select.options).some(option => option.value === currentValue);
+                if (optionExists) {
+                    select.value = currentValue;
+                }
+            }
         }
 
         // 通用代理验证函数
