@@ -5118,15 +5118,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                             💡 为什么需要反代？PROXYIP又是什么？
                         </button>
                         <button type="button" class="btn btn-search-proxy" id="getMoreProxyIPBtn"
-                            onclick="showGetMoreProxyIPModal()" style="display: none; padding: 10px 16px;" title="使用网络测绘引擎寻找可用的PROXYIP">
+                            onclick="showGetMoreProxyIPModal()" style="display: none; padding: 10px 16px;"
+                            title="使用网络测绘引擎寻找可用的PROXYIP">
                             🗺️ 探索更多 PROXYIP
                         </button>
                         <button type="button" class="btn btn-search-proxy" id="exploreSocks5Btn"
-                            onclick="showExploreSocks5Modal()" style="display: none; padding: 10px 16px;" title="从SOCKS5列表中选择可用的代理">
+                            onclick="showExploreSocks5Modal()" style="display: none; padding: 10px 16px;"
+                            title="从SOCKS5列表中选择可用的代理">
                             🧩 探索更多 SOCKS5
                         </button>
                         <button type="button" class="btn btn-search-proxy" id="exploreHTTPBtn"
-                            onclick="showExploreHTTPModal()" style="display: none; padding: 10px 16px;" title="从HTTP列表中选择可用的代理">
+                            onclick="showExploreHTTPModal()" style="display: none; padding: 10px 16px;"
+                            title="从HTTP列表中选择可用的代理">
                             🧩 探索更多 HTTP
                         </button>
                         <div class="btn-group">
@@ -12146,8 +12149,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 <div style="font-family: sans-serif; min-width: 150px; color: ${textColor};">
                     <div style="font-weight: bold; font-size: 14px; margin-bottom: 5px;">${proxyData.country_emoji} ${proxyData.city || '未知城市'}</div>
                     <div style="font-size: 12px; margin-bottom: 3px;">国家: ${proxyData.country_cn} (${proxyData.country})</div>
-                    <div style="font-size: 11px; opacity: 0.9;">运营商: ${proxyData.asOrganization}</div>
-                    <div style="font-size: 11px; opacity: 0.8;">经纬度: ${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
+                    <div style="font-size: 11px; opacity: 0.9;">落地IP: ${proxyData.clientIp}</div>
+                    <div style="font-size: 11px; opacity: 0.8;">运营商: ${proxyData.asOrganization}</div>
+                    <div style="font-size: 11px; opacity: 0.7;">经纬度: ${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
                 </div>
             `;
             proxyMaps[type].marker.bindPopup(popupContent, { offset: L.point(0, -32) }).openPopup();
