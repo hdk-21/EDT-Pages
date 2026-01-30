@@ -11878,28 +11878,56 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 检查是否有成功的代理
             const successfulProxies = sortedProxies.filter(proxy => verificationStatus[proxy.proxy]?.status === 'success');
 
+            // 辅助函数：生成代理选项HTML
+            function generateProxyOption(proxy, isSelectable = false) {
+                const status = verificationStatus[proxy.proxy];
+                let emoji = '⏳';
+                let statusText = '验证中';
+
+                if (status.status === 'success') {
+                    emoji = '✅';
+                    statusText = `${status.responseTime}ms`;
+                } else if (status.status === 'timeout') {
+                    emoji = '🔴';
+                    statusText = '已超时';
+                } else if (status.status === 'failed') {
+                    emoji = '🔴';
+                    statusText = '不可用';
+                }
+
+                const label = `${emoji}[${statusText}]${proxy.city},AS${proxy.asn},${proxy.asOrganization}`;
+                const disabled = !isSelectable || status.status !== 'success';
+                const selected = isSelectable && status.status === 'success' && successfulProxies.indexOf(proxy) === 0 ? 'selected' : '';
+                return `<option value="${proxy.proxy}" ${disabled ? 'disabled' : ''} ${selected}>${label}</option>`;
+            }
+
             let html;
             if (successfulProxies.length > 0) {
-                // 有成功的代理，直接显示并默认选中第一个
+                // 有成功的代理，显示所有代理，默认选中第一个成功的
                 html = '';
-                successfulProxies.forEach((proxy, index) => {
-                    const status = verificationStatus[proxy.proxy];
-                    const label = `✅[${status.responseTime}ms]${proxy.city},AS${proxy.asn},${proxy.asOrganization}`;
-                    html += `<option value="${proxy.proxy}" ${index === 0 ? 'selected' : ''}>${label}</option>`;
+                sortedProxies.forEach(proxy => {
+                    html += generateProxyOption(proxy, true);
                 });
             } else if (allVerified) {
                 // 验证完成但没有成功的代理
                 html = '<option value="">很抱歉，当前地区无可用代理，请切换其他地区。</option>';
             } else {
-                // 验证中
-                html = '<option value="">正在验证可用性，请稍候...</option>';
+                // 验证中，显示代理列表
+                html = '';
+                sortedProxies.forEach(proxy => {
+                    html += generateProxyOption(proxy, false);
+                });
             }
 
             select.innerHTML = html;
 
-            // 如果有成功的代理且之前没有选中值，选中第一个
-            if (successfulProxies.length > 0 && !select.value) {
-                select.value = successfulProxies[0].proxy;
+            // 恢复用户的选择
+            if (successfulProxies.length > 0) {
+                if (currentValue && successfulProxies.some(p => p.proxy === currentValue)) {
+                    select.value = currentValue;
+                } else {
+                    select.value = successfulProxies[0].proxy;
+                }
             }
         }
 
