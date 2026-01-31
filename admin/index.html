@@ -676,6 +676,31 @@
             transition: all 0.3s ease;
         }
 
+        /* 移动设备上变为上下布局 */
+        @media (max-width: 768px) {
+            #exploreSocks5Modal .modal,
+            #exploreHTTPModal .modal {
+                flex-direction: column;
+                max-height: calc(100vh - 60px);
+                height: calc(100vh - 60px);
+            }
+
+            .modal-map-side {
+                flex: 1;
+                height: auto;
+                min-height: 300px;
+                width: 100%;
+            }
+
+            .modal-content-side {
+                flex: 0 0 auto;
+                max-height: none;
+                padding: 20px;
+                border-left: none;
+                overflow-y: auto;
+            }
+        }
+
         html.dark-mode .modal-content-side {
             background: var(--bg-secondary, #1a1a1a);
             border-left: 1px solid var(--border-color, #333);
