@@ -676,6 +676,58 @@
             transition: all 0.3s ease;
         }
 
+        /* 移动设备上变为上下布局 - 当屏幕宽度小于等于768px时生效 */
+        @media (max-width: 768px) {
+            /* SOCKS5和HTTP弹窗的主容器样式调整 */
+            #exploreSocks5Modal .modal,
+            #exploreHTTPModal .modal {
+                /* 改为上下排列方式（竖直方向） */
+                flex-direction: column;
+                /* 最大高度：浏览器可视区高度 - 100px（为顶部导航栏和按钮留出空间） */
+                max-height: calc(100vh - 100px);
+                /* 设置实际高度为最大高度，充分利用屏幕空间 */
+                height: calc(100vh - 100px);
+            }
+
+            /* 地图区域样式 - 放在上半部分 */
+            .modal-map-side {
+                /* flex: 1 表示占用所有剩余空间 */
+                flex: 1;
+                /* 高度自动计算 */
+                height: auto;
+                /* 最小高度120px，缩小地图以保护下面的按钮显示空间 */
+                min-height: 120px;
+                /* 最大高度限制，确保下面的下拉框和按钮不会被压挤 */
+                max-height: calc(100vh - 280px);
+                /* 宽度铺满整个宽度 */
+                width: 100%;
+            }
+
+            /* 内容区域样式 - 放在下半部分（地区和代理选择、按钮） */
+            .modal-content-side {
+                /* flex: 0 0 auto 表示不伸缩，只占用内容所需高度 */
+                flex: 0 0 auto;
+                /* 设置最小高度，确保下拉框和按钮完整显示 */
+                min-height: 180px;
+                /* 取消最大高度限制，让内容自适应 */
+                max-height: none;
+                /* 内边距 */
+                padding: 20px;
+                /* 移除左边框（因为已不是左右并排） */
+                border-left: none;
+                /* 内容超过时垂直滚动 */
+                overflow-y: auto;
+            }
+        }
+
+        /* 
+        调整指南：
+        1. 下拉框/按钮显示不完整？增加 .modal-content-side 的 min-height（如改为200px）
+        2. 下拉框/按钮显示完整，但想给地图更多空间？减小 .modal-content-side 的 min-height（如改为150px）
+        3. 地图太小？增加 .modal-map-side 的 min-height（如改为150px）或减小 max-height 的280值（如改为250）
+        4. 地图太大压挤按钮？减小 .modal-map-side 的 min-height（如改为100px）或增加 max-height 的280值（如改为300）
+        */
+
         html.dark-mode .modal-content-side {
             background: var(--bg-secondary, #1a1a1a);
             border-left: 1px solid var(--border-color, #333);
@@ -6115,7 +6167,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     style="cursor: pointer;">×</button>
                 <h2 class="section-title" style="margin-bottom: 10px; text-align: center;">🧩 探索更多 SOCKS5</h2>
                 <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 20px;">
-                    代理资源列表来自 Github、<a href="https://t.me/Enkelte_notif" target="_blank" rel="noopener noreferrer">Notif
+                    代理资源来自 Github、<a href="https://t.me/Enkelte_notif" target="_blank" rel="noopener noreferrer">Notif
                         💬</a>频道、OTC大佬 等开源社区。
                 </p>
                 <div class="socks5-list-container">
@@ -6129,13 +6181,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         </div>
                     </div>
 
-                    <div class="form-group" id="socks5ProxySelectGroup" style="display: none;">
+                    <div class="form-group" id="socks5ProxySelectGroup">
                         <label for="socks5ProxySelect">🌐 选择目标代理</label>
                         <div class="input-wrapper">
                             <select id="socks5ProxySelect"
                                 onchange="updateSocks5ConfirmButton(); updateProxyMap('socks5');"
                                 style="padding-left: 16px; font-family: 'Fira Code', monospace; font-size: 12px;">
-                                <option value="">加载中...</option>
+                                <option value=""></option>
                             </select>
                         </div>
                     </div>
@@ -6165,7 +6217,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     style="cursor: pointer;">×</button>
                 <h2 class="section-title" style="margin-bottom: 10px; text-align: center;">🧩 探索更多 HTTP</h2>
                 <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 20px;">
-                    代理资源列表来自 Github、<a href="https://t.me/Enkelte_notif" target="_blank" rel="noopener noreferrer">Notif
+                    代理资源来自 Github、<a href="https://t.me/Enkelte_notif" target="_blank" rel="noopener noreferrer">Notif
                         💬</a>频道、OTC大佬 等开源社区。
                 </p>
                 <div class="http-list-container">
@@ -6178,12 +6230,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         </div>
                     </div>
 
-                    <div class="form-group" id="httpProxySelectGroup" style="display: none;">
+                    <div class="form-group" id="httpProxySelectGroup">
                         <label for="httpProxySelect">🌐 选择目标代理</label>
                         <div class="input-wrapper">
                             <select id="httpProxySelect" onchange="updateHTTPConfirmButton(); updateProxyMap('http');"
                                 style="padding-left: 16px; font-family: 'Fira Code', monospace; font-size: 12px;">
-                                <option value="">加载中...</option>
+                                <option value=""></option>
                             </select>
                         </div>
                     </div>
@@ -12074,7 +12126,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             modal.classList.add('show');
             document.getElementById(config.regionSelectId).innerHTML = '<option value="">加载中...</option>';
-            document.getElementById(config.proxySelectGroupId).style.display = 'none';
+            document.getElementById(config.proxySelectGroupId).style.display = 'block';
             document.getElementById(config.confirmBtnId).disabled = true;
 
             // 加载列表
@@ -12138,8 +12190,16 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 proxyMaps[type].marker = L.marker([lat, lng]).addTo(map);
             }
 
-            // 平滑移动地图并缩中心 - 进一步降低缩放级别到 4 以查看更多范围
-            map.flyTo([lat, lng], 4, {
+            // 平滑移动地图 - 将标记点定位到地图的下方60%位置，避免气泡被遮挡
+            map.setZoom(4);
+            
+            // 计算偏移后的中心点，使标记显示在视图的60%处（下方）
+            const mapSize = map.getSize();
+            const offsetY = mapSize.y * 0.2; // 向上偏移20%，使标记显示在60%处
+            const point = map.project([lat, lng], 4).subtract([0, offsetY]);
+            const offsetCenter = map.unproject(point, 4);
+            
+            map.flyTo(offsetCenter, 4, {
                 duration: 1.5
             });
 
@@ -12248,7 +12308,6 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const selectedCountry = document.getElementById(config.regionSelectId).value;
 
             if (!selectedCountry) {
-                document.getElementById(config.proxySelectGroupId).style.display = 'none';
                 document.getElementById(config.confirmBtnId).disabled = true;
                 return;
             }
