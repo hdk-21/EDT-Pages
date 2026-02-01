@@ -678,6 +678,7 @@
 
         /* 移动设备上变为上下布局 - 当屏幕宽度小于等于768px时生效 */
         @media (max-width: 768px) {
+
             /* SOCKS5和HTTP弹窗的主容器样式调整 */
             #exploreSocks5Modal .modal,
             #exploreHTTPModal .modal {
@@ -12123,6 +12124,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             window[config.countryMap] = {};
             window[config.verificationStatus] = {};
             window[config.verificationTimeouts] = {};
+            lastMappedProxy[type] = null;
 
             modal.classList.add('show');
             document.getElementById(config.regionSelectId).innerHTML = '<option value="">加载中...</option>';
@@ -12137,6 +12139,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 initProxyMap(type);
             }, 300);
         }
+
+        const lastMappedProxy = {
+            socks5: null,
+            http: null
+        };
 
         const proxyMaps = {
             socks5: { map: null, marker: null },
@@ -12175,6 +12182,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const selectedProxyUrl = select.value;
             if (!selectedProxyUrl || !proxyMaps[type].map) return;
 
+            // 如果该代理已经显示在地图上了，就不再重复加载，避免频繁刷新导致的气泡闪烁
+            if (lastMappedProxy[type] === selectedProxyUrl) return;
+            lastMappedProxy[type] = selectedProxyUrl;
+
             // 从数据列表中找到完整的代理信息
             const proxyData = window[config.listData].find(p => p.proxy === selectedProxyUrl);
             if (!proxyData || !proxyData.latitude || !proxyData.longitude) return;
@@ -12192,13 +12203,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             // 平滑移动地图 - 将标记点定位到地图的下方60%位置，避免气泡被遮挡
             map.setZoom(4);
-            
+
             // 计算偏移后的中心点，使标记显示在视图的60%处（下方）
             const mapSize = map.getSize();
             const offsetY = mapSize.y * 0.2; // 向上偏移20%，使标记显示在60%处
             const point = map.project([lat, lng], 4).subtract([0, offsetY]);
             const offsetCenter = map.unproject(point, 4);
-            
+
             map.flyTo(offsetCenter, 4, {
                 duration: 1.5
             });
