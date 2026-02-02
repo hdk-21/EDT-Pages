@@ -1862,7 +1862,8 @@
                 margin-bottom: 20px
             }
 
-            .module .form-group {
+            .module .form-group,
+            #portSection {
                 grid-template-columns: 1fr;
                 gap: 10px
             }
@@ -1885,14 +1886,25 @@
 
         @media(max-width:768px) {
             .module-footer {
-                flex-direction: column;
+                flex-wrap: wrap;
                 align-items: flex-start;
+                gap: 10px;
+            }
+
+            .module-footer .btn-online-optimize:not(.hidden-section),
+            .module-footer .btn-api-optimize:not(.hidden-section) {
+                flex: 1;
+                min-width: calc(50% - 5px);
             }
 
             .module-footer .btn-group {
-                margin-left: auto;
-                width: auto;
-                align-self: flex-end;
+                width: 100%;
+                display: flex;
+                gap: 10px;
+            }
+
+            .module-footer .btn-group .btn {
+                flex: 1;
             }
 
             .module-footer .btn-ech-help,
@@ -2123,6 +2135,39 @@
             gap: 10px;
             justify-content: space-between;
             margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .api-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .btn-verify-api {
+                grid-column: 1;
+                grid-row: 1;
+                flex: 1;
+            }
+
+            .btn-append-api {
+                grid-column: 2;
+                grid-row: 1;
+                flex: 1;
+            }
+
+            .btn-close-api {
+                grid-column: 1;
+                grid-row: 2;
+                flex: 1;
+            }
+
+            .btn-append-results {
+                grid-column: 2;
+                grid-row: 2;
+                flex: 1;
+            }
         }
 
         .btn-verify-api {
@@ -2688,7 +2733,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
-            margin-bottom: 20px;
             align-items: flex-end;
         }
 
@@ -2699,7 +2743,11 @@
 
         @media (max-width: 768px) {
             .optimize-params-row {
-                grid-template-columns: 1fr;
+                display: block;
+            }
+
+            .optimize-params-row .form-group {
+                margin-bottom: 15px;
             }
         }
 
@@ -2882,6 +2930,90 @@
             margin-top: 8px;
         }
 
+        @media (max-width: 768px) {
+            .optimize-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .save-tip {
+                order: -1;
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .btn-start-optimize {
+                order: 1;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-save-override {
+                order: 2;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-save-append {
+                order: 3;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .optimize-buttons .btn-secondary {
+                order: 4;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .optimize-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+            .save-tip {
+                grid-column: 1 / -1;
+                order: unset;
+            }
+
+            .btn-start-optimize {
+                grid-column: 1;
+                grid-row: 2;
+                order: unset;
+            }
+
+            .btn-save-override {
+                grid-column: 2;
+                grid-row: 2;
+                order: unset;
+            }
+
+            .btn-save-append {
+                grid-column: 1;
+                grid-row: 3;
+                order: unset;
+            }
+
+            .optimize-buttons .btn-secondary {
+                grid-column: 2;
+                grid-row: 3;
+                order: unset;
+            }
+        }
+
         .btn-start-optimize {
             background: linear-gradient(135deg, #10b981 0, #059669 100%);
             color: #fff;
@@ -2907,6 +3039,7 @@
             align-items: center;
             min-height: 32px;
             margin-right: auto;
+            line-height: 1.2;
         }
 
         .btn-save-override {
@@ -5471,7 +5604,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             </div>
             <div class="skipverify-content" style="text-align: left;">
                 <p class="skipverify-text"><strong>重要更新：</strong><strong>Xray-core v26.1.31</strong> 版本起已停止支持"<strong>跳过证书验证</strong>"功能，这是<strong>核心安全策略调整</strong>（<a href="https://github.com/XTLS/Xray-core/commit/2c92339f95fe9aa493b6ae51d3b07017a44c4014" target="_blank" rel="noopener" class="skipverify-link">详情</a>）。</p>
-                <p class="skipverify-text"><strong>影响范围：</strong>如果你的客户端（如 <strong>v2rayN、v2rayNG、Happ</strong> 等）使用的是 <strong>Xray 内核</strong>，则该功能将导致<strong class="skipverify-title">内核运行失败</strong>。</p>
+                <p class="skipverify-text"><strong>影响范围：</strong>如果你的客户端（如 <strong>v2rayN、v2rayNG、Happ</strong> 等）使用的是 <strong>Xray 内核</strong>，则该功能将导致 <strong class="skipverify-title">内核运行失败</strong>。</p>
             </div>
             <div class="skipverify-buttons">
                 <button type="button" class="btn btn-confirm-skip-verify btn-confirm-reset" onclick="confirmSkipVerify()">确认开启</button>
@@ -12760,7 +12893,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             closeHostsMismatchModal({ target: { id: 'hostsMismatchModal' } });
 
             // 显示确认提示
-            showToast('24小时内不会再提示', 'info');
+            showToast('🎉 24小时内不会再提示', 'info');
         }
 
     </script>
