@@ -9949,13 +9949,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
-        // 防止输入"?"和"#"字符
+        // 防止输出"#"字符，允许输入"?"
         function preventInvalidChars(input) {
-            input.value = input.value.replace(/[?#]/g, '');
+            input.value = input.value.replace(/#/g, '');
         }
 
         function preventInvalidCharsOnKeypress(event) {
-            if (event.key === '?' || event.key === '#') {
+            if (event.key === '#') {
                 event.preventDefault();
             }
         }
