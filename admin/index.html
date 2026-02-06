@@ -4570,6 +4570,31 @@
             flex-shrink: 0;
         }
 
+        .title-text {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .title-main {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .title-subtitle {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary, #666);
+            opacity: 0.7;
+        }
+
+        html.dark-mode .title-subtitle {
+            color: #999;
+        }
+
         .status-loading {
             background: #fbbf24;
             animation: pulse-loading 1.5s ease-in-out infinite;
@@ -5237,7 +5262,10 @@
                         <div class="network-card">
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-ipip"></span>
-                                国内测试
+                                <div class="title-text">
+                                    <div class="title-main">国内测试</div>
+                                    <div class="title-subtitle">speedtest.cn</div>
+                                </div>
                             </div>
                             <div class="network-info-content">
                                 <span id="ipip-ip" class="ip-text">-</span>
@@ -5251,7 +5279,10 @@
                         <div class="network-card">
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-overseas"></span>
-                                国外测试(漏网之鱼)
+                                <div class="title-text">
+                                    <div class="title-main">国外测试</div>
+                                    <div class="title-subtitle">漏网之鱼</div>
+                                </div>
                             </div>
                             <div class="network-info-content">
                                 <span id="overseas-ip" class="ip-text">-</span>
@@ -5265,7 +5296,10 @@
                         <div class="network-card">
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-cf"></span>
-                                CloudFlare(ProxyIP)
+                                <div class="title-text">
+                                    <div class="title-main">CloudFlare</div>
+                                    <div class="title-subtitle">ProxyIP</div>
+                                </div>
                             </div>
                             <div class="network-info-content">
                                 <span id="cf-ip" class="ip-text">-</span>
@@ -5279,7 +5313,10 @@
                         <div class="network-card">
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-twitter"></span>
-                                翻墙测试(X.com)
+                                <div class="title-text">
+                                    <div class="title-main">翻墙测试</div>
+                                    <div class="title-subtitle">X.com</div>
+                                </div>
                             </div>
                             <div class="network-info-content">
                                 <span id="twitter-ip" class="ip-text">-</span>
@@ -12250,7 +12287,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                     // 更新标题显示当前使用的 API
                     if (titleElement) {
-                        titleElement.innerHTML = `<span class="status-indicator" id="status-ipip"></span>国内测试(${config.name})`;
+                        titleElement.innerHTML = `<span class="status-indicator" id="status-ipip"></span><div class="title-text"><div class="title-main">国内测试</div><div class="title-subtitle">${config.name}</div></div>`;
                         setStatus('status-ipip', 'success'); // 重新设置状态,因为 innerHTML 会清除
                     }
 
