@@ -5280,8 +5280,8 @@
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-overseas"></span>
                                 <div class="title-text">
-                                    <div class="title-main">国外测试</div>
-                                    <div class="title-subtitle">漏网之鱼</div>
+                                    <div class="title-main">境外测试</div>
+                                    <div class="title-subtitle">其他</div>
                                 </div>
                             </div>
                             <div class="network-info-content">
@@ -5289,7 +5289,7 @@
                                 <div class="location-text">
                                     <span id="overseas-country" class="country-text">-</span>
                                 </div>
-                                <div class="network-tip">· 您访问没有被封的国外站点所使用的IP</div>
+                                <div class="network-tip">· 您访问没有被封的境外站点所使用的IP</div>
                             </div>
                         </div>
 
@@ -5328,7 +5328,7 @@
                         </div>
                     </div>
                     <small style="font-size: 12px; color: #9ca3af; margin-top: 6px; display: block;">💡 <b>中国大陆境内测试</b>
-                        是由您代理应用的 <b>分流规则</b> 决定的，<b>国外测试</b> 是由您的 <b>优选IP</b> 决定的，而 <b>CF、Twitter、ChatGPT</b> 是由您的
+                        是由您代理应用的 <b>分流规则</b> 决定的，<b>境外测试</b> 是由您的 <b>优选IP</b> 决定的，而 <b>CF、Twitter、ChatGPT</b> 是由您的
                         <b>PROXYIP</b> 决定的。</small>
                     <div class="module-content" style="display: none;" id="network-module-content">
                         <!-- 延迟测试卡片 -->
@@ -12309,7 +12309,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             console.error('所有中国大陆境内测试 API 都失败');
         }
 
-        // 获取国外测试数据
+        // 获取境外测试数据
         async function fetchOverseasTestData() {
             setStatus('status-overseas', 'loading');
 
@@ -12335,10 +12335,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     document.getElementById('overseas-ip').textContent = edgeIp;
                     document.getElementById('overseas-country').textContent = loc || '未知';
                     setStatus('status-overseas', 'success');
-                    console.log(`[国外测试] 成功: IP=${edgeIp}, 位置=${loc}`);
+                    console.log(`[境外测试] 成功: IP=${edgeIp}, 位置=${loc}`);
                     return;
                 } catch (error) {
-                    console.log(`[国外测试] ${api.url} 失败: ${error.message}`);
+                    console.log(`[境外测试] ${api.url} 失败: ${error.message}`);
                 }
             }
 
@@ -12346,7 +12346,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             document.getElementById('overseas-ip').innerHTML = '<span class="error">加载失败</span>';
             document.getElementById('overseas-country').textContent = '';
             setStatus('status-overseas', 'error');
-            console.error('国外测试 所有API都失败');
+            console.error('境外测试 所有API都失败');
         }
 
         // 获取 CloudFlare 数据
