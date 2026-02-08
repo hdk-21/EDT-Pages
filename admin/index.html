@@ -5314,7 +5314,7 @@
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-twitter"></span>
                                 <div class="title-text">
-                                    <div class="title-main">翻墙测试</div>
+                                    <div class="title-main">连接测试</div>
                                     <div class="title-subtitle">X.com</div>
                                 </div>
                             </div>
@@ -12397,7 +12397,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                 console.log(`[Twitter] 成功: IP=${twIp}, 位置=${twLoc}`);
             } catch (error) {
-                document.getElementById('twitter-ip').innerHTML = '<span class="error">翻墙失败</span>';
+                document.getElementById('twitter-ip').innerHTML = '<span class="error">连接失败</span>';
                 document.getElementById('twitter-country').textContent = '';
                 setStatus('status-twitter', 'error');
                 console.error('推特入口接口错误:', error);
