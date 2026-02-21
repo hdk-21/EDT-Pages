@@ -6919,6 +6919,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 <button type="button" class="modal-close" onclick="closeGetMoreProxyIPModal(event)"
                     style="cursor: pointer;">×</button>
                 <h2 class="section-title" style="margin-bottom: 10px; text-align: center;">🗺️ 获取更多 PROXYIP</h2>
+                <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 20px;">
+                    反代资源来自 Github、<a href="https://t.me/zip_cm_edu_kg" target="_blank" rel="noopener noreferrer">CM科技大学</a>频道 等开源社区。
+                </p>
                 <div class="proxy-list-container">
                     <div class="form-group">
                         <label for="proxyIPDataRegionSelect">🏳️‍🌈 选择目标地区</label>
@@ -12976,7 +12979,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 const dataList = window.proxyIPListData || [];
                 const proxyData = dataList.find(p => p.ip === ip);
                 const emoji = proxyData?.country_emoji || '🌐';
-                
+
                 // 构建 title 信息
                 let titleText = '';
                 if (proxyData) {
@@ -12986,7 +12989,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     const clientIp = proxyData.clientIp || ip;
                     const asn = proxyData.asn || '未知';
                     const asOrganization = proxyData.asOrganization || '未知';
-                    
+
                     titleText = `${city}\n国家: [${country}]${countryName}\n落地IP: ${clientIp}\nASN: ${asn}\n运营商: ${asOrganization}`;
                 }
 
@@ -13273,7 +13276,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         function verifyProxies(proxies, verifySingleFunction, onProgress, signal) {
             // 打乱代理列表的顺序，避免多个用户同时测试时都从头开始
             const shuffledProxies = shuffleArray(proxies);
-            
+
             // 并发控制：最多8个并发请求
             const maxConcurrent = 8;
             let currentIndex = 0;
