@@ -12060,9 +12060,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             optimizeResults = {};
 
             // 根据IP库类型判断是否为优选反代
-            // 只有使用"反向代理列表"IP库时，备注才是"优选反代"，其余一律为"官方优选"
+            // 只有使用"反向代理列表"IP库时，备注才是"CF 反代"，其余一律为"Cloudflare"
             const isReverseProxy = currentIPLibrary === 'reverse-proxy';
-            const type = isReverseProxy ? '优选反代' : '官方优选';
+            const type = isReverseProxy ? 'CF 反代' : 'Cloudflare';
             console.log(`[在线优选] 调试: IP库类型=${currentIPLibrary}, 备注类型=${type}`);
 
             for (const result of results) {
