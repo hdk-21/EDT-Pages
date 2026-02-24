@@ -646,6 +646,75 @@
                 margin: 5px 0 !important;
             }
         }
+
+        /* 科技感按钮倒计时及光效 */
+        .btn-tech-upgrade {
+            position: relative;
+            overflow: hidden;
+            animation: btnPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .btn-countdown-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #fff;
+            width: 100%;
+            border-radius: 0 0 14px 14px;
+            transform-origin: left;
+            animation: countdownProgress 8s linear forwards;
+            box-shadow: 0 0 8px #fff, 0 0 15px #f6821f;
+            z-index: 2;
+        }
+
+        /* 扫描影效 */
+        .btn-tech-upgrade::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            animation: techScan 3s infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes countdownProgress {
+            from {
+                transform: scaleX(1);
+            }
+
+            to {
+                transform: scaleX(0);
+            }
+        }
+
+        @keyframes techScan {
+            0% {
+                left: -60%;
+            }
+
+            30%,
+            100% {
+                left: 150%;
+            }
+        }
+
+        @keyframes btnPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 8px 25px rgba(246, 130, 31, 0.5);
+            }
+        }
     </style>
 </head>
 
@@ -734,7 +803,7 @@
                     let contentHTML = '';
 
                     // 按钮通用样式
-                    const primaryBtnStyle = 'display: inline-block; background: linear-gradient(135deg, #faab41 0%, #f6821f 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 700; font-size: 17px; box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2); transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none;';
+                    const primaryBtnStyle = 'display: inline-block; background: linear-gradient(135deg, #faab41 0%, #f6821f 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 700; font-size: 17px; box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2); transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none; position: relative; overflow: hidden;';
                     const secondaryBtnStyle = 'display: inline-block; background: #f3f4f6; color: #9ca3af; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 500; font-size: 16px; transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none;';
 
                     if (lang.toLowerCase().startsWith('zh')) {
@@ -793,11 +862,28 @@
                     modalContent.innerHTML = contentHTML;
                     irModal.classList.add('show');
 
-                    document.getElementById('accept-suggestion').onclick = () => {
+                    // 倒计时逻辑
+                    const acceptBtn = document.getElementById('accept-suggestion');
+                    const stayBtn = document.getElementById('stay-current');
+
+                    // 注入动画进度条
+                    const progressBar = document.createElement('div');
+                    progressBar.className = 'btn-countdown-line';
+                    acceptBtn.classList.add('btn-tech-upgrade');
+                    acceptBtn.appendChild(progressBar);
+
+                    // 8秒倒计时自动跳转
+                    const redirectTimer = setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 8000);
+
+                    acceptBtn.onclick = () => {
+                        clearTimeout(redirectTimer);
                         window.location.href = redirectUrl;
                     };
 
-                    document.getElementById('stay-current').onclick = () => {
+                    stayBtn.onclick = () => {
+                        clearTimeout(redirectTimer);
                         irModal.classList.remove('show');
                         enableLogin();
                     };
