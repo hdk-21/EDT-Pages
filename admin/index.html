@@ -5415,7 +5415,7 @@
                 </div>
                 <div class="header-buttons">
                     <button type="button" class="btn btn-mode-toggle" id="modeToggleBtn" onclick="toggleUserMode()">🐣
-                        我是小白！我想简单点！</button>
+                        简约模式</button>
                     <button type="button" class="btn btn-danger btn-reset"
                         onclick="resetConfigWithConfirm()">⚠️重置配置</button>
                     <button type="button" class="btn btn-primary" onclick="logout()">👋退出登录</button>
@@ -5768,9 +5768,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     <div class="form-group" id="transportGroup" style="display: none;">
                         <label>传输协议</label>
                         <select id="transport" title="传输协议" onchange="handleTransportChange()">
-                            <option value="ws">WebSocket 稳！</option>
-                            <option value="xhttp">XHTTP 大量消耗请求数！</option>
-                            <option value="grpc">gRPC 花里胡笑！</option>
+                            <option value="ws">WebSocket</option>
+                            <option value="xhttp">XHTTP 大量消耗请求数</option>
+                            <option value="grpc">gRPC 花里胡笑</option>
                         </select>
                     </div>
 
@@ -5881,10 +5881,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         <div class="input-wrapper">
                             <div class="checkbox-group">
                                 <input type="checkbox" id="enableECH"
-                                    title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
+                                    title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
                                     onchange="handleECHEnableChange()">
                                 <label for="enableECH" class="checkbox-label"
-                                    title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
+                                    title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
                             </div>
                         </div>
                     </div>
@@ -5911,7 +5911,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                                 <option value="https://doh.cmliussss.com/CMLiussss" data-region="international">
                                     https://doh.cmliussss.com/CMLiussss（Google DoH：CM镜像）</option>
                                 <option value="https://dns.alidns.com/dns-query" data-region="domestic">
-                                    https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）小白推荐选这个！！！
+                                    https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）推荐
                                 </option>
                                 <option value="https://sm2.doh.pub/dns-query" data-region="domestic">
                                     https://sm2.doh.pub/dns-query（腾讯国密 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）</option>
@@ -5929,13 +5929,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     </div>
 
                     <div class="form-group" id="echSNIGroup"
-                        title="用于解析 EchConfig 的域名，并非ECH伪装域名！CF ECH伪装域名均为 cloudflare-ech.com ！！！"
+                        title="用于解析 EchConfig 的域名，并非ECH伪装域名。CF ECH伪装域名均为 cloudflare-ech.com 。"
                         style="display: none; align-items: start;">
                         <label for="echSNISelect" style="padding-top: 10px;">EchConfig 解析域名</label>
                         <div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
                             <select id="echSNISelect" style="display: none;" onchange="onEchSNISelectChange()">
                                 <option value="__AUTO__">自动获取（使用节点的伪装域名解析 EchConfig）</option>
-                                <option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）小白推荐选这个！！！
+                                <option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）推荐
                                 </option>
                                 <option value="crypto.cloudflare.com">crypto.cloudflare.com（Cloudflare密码学服务）</option>
                                 <option value="encryptedsni.com">encryptedsni.com（Cloudflare加密SNI）</option>
@@ -7328,7 +7328,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             </div>
             <div style="display: flex; gap: 12px; justify-content: center;">
                 <button type="button" class="btn btn-hosts-warning" onclick="dismissHostsMismatchNotification()"
-                    style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">我知道了！24小时内不再提示！</button>
+                    style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">24小时内不再提示</button>
             </div>
         </div>
     </div>
@@ -9362,11 +9362,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 });
 
                 if (!response.ok) throw new Error('保存失败');
-                showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容！', 'success');
+                showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容。', 'success');
                 modifiedSections.delete(section);
                 updateButtonStates();
             } catch (error) {
-                showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试！', 'error');
+                showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试。', 'error');
             }
         }
 
@@ -9581,13 +9581,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             if (cardContainer.classList.contains('simple-mode')) {
                 // 切换到高手模式
                 cardContainer.classList.remove('simple-mode');
-                btn.textContent = '🐣 我是小白！我想简单点！';
+                btn.textContent = '🐣 简约模式';
                 localStorage.setItem('userMode', 'expert');
                 showToast('🚀 已切换到高手模式，显示所有功能', 'success');
             } else {
                 // 切换到小白模式
                 cardContainer.classList.add('simple-mode');
-                btn.textContent = '🚀 我是高手！我就要折腾！';
+                btn.textContent = '🚀 专业模式';
                 localStorage.setItem('userMode', 'simple');
                 showToast('🐣 已切换到小白模式，只显示常用功能', 'success');
             }
@@ -9606,10 +9606,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             if (userMode === 'simple') {
                 cardContainer.classList.add('simple-mode');
-                btn.textContent = '🚀 我是高手！我就要折腾！';
+                btn.textContent = '🚀 专业模式';
             } else {
                 cardContainer.classList.remove('simple-mode');
-                btn.textContent = '🐣 我是小白！我想简单点！';
+                btn.textContent = '🐣 简约模式';
             }
         }
 
@@ -10865,7 +10865,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 // 第二步：通过Bot Token向Chat ID推送测试消息
                 const sendUrlParams = new URLSearchParams({
                     chat_id: chatID,
-                    text: '✅ Telegram 通知配置已验证成功！'
+                    text: '✅ Telegram 通知配置已验证成功。'
                 });
                 const sendUrl = `https://api.telegram.org/bot${token}/sendMessage?${sendUrlParams}`;
 
@@ -11112,7 +11112,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     statusEl.style.background = 'linear-gradient(135deg, #10b981 0, #059669 100%)';
                     const maxQuota = data.max || 100000;
                     const percentage = (data.total / maxQuota * 100).toFixed(2);
-                    statusEl.textContent = `✅ 验证成功！ 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
+                    statusEl.textContent = `✅ 验证成功。 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
                     confirmBtn.disabled = false;
                     confirmBtn.style.opacity = '1';
                     confirmBtn.dataset.testPassed = 'true';
@@ -11673,7 +11673,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     }
                     document.getElementById('btnAppendAPI').disabled = false;
                     document.getElementById('btnAppendResults').disabled = false;
-                    showToast('✅ API接口验证成功！', 'success');
+                    showToast('✅ API接口验证成功。', 'success');
                 } else {
                     // 接口不可用
                     document.getElementById('apiOptimizeResults').value = '❌ 接口不可用，请检查URL和端口是否正确';
@@ -11843,7 +11843,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                 if (loc !== 'CN') {
                     console.warn('[在线优选] 警告: 检测到非CN地区访问，可能处于代理/VPN环境');
-                    html += `<div class="ip-detection-warning" style="font-size: 16px; font-weight: 700; color: #dc2626; margin-top: 12px; line-height: 1.6;">⚠️ 检测到您当前很可能处于代理/VPN环境中！请确保处于直连网络环境下再进行在线优选，否则优选测试结果将因为不准确变得毫无意义！</div>`;
+                    html += `<div class="ip-detection-warning" style="font-size: 16px; font-weight: 700; color: #dc2626; margin-top: 12px; line-height: 1.6;">⚠️ 检测到您当前很可能处于代理/VPN环境中。请确保处于直连网络环境下再进行在线优选，否则优选测试结果将因为不准确变得毫无意义。</div>`;
                     // 非CN地区，禁用开始优选按钮
                     btnStart.disabled = true;
                     btnStart.textContent = '仅限CN地区';
@@ -11942,7 +11942,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 displayResults();
 
                 console.log('[在线优选] 完成: 优选流程已完成');
-                showToast('优选完成！', 'success');
+                showToast('优选完成。', 'success');
 
             } catch (error) {
                 console.error('[在线优选] 优选过程出错:', error);
@@ -14325,7 +14325,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
-        // 处理"知道了！24小时内不提示"按钮
+        // 处理"知道了。24小时内不提示"按钮
         function dismissHostsMismatchNotification() {
             const cacheKey = 'hostsMismatchNotificationTime';
             const currentTime = Date.now();
