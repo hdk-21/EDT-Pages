@@ -656,13 +656,16 @@
         }
 
         .uuid-snippet-stage {
+            --uuid-snippet-surface-radius: 18px;
             position: relative;
             margin-bottom: 0;
-            border-radius: 22px;
+            box-sizing: border-box;
+            border-radius: var(--uuid-snippet-surface-radius);
             overflow: hidden;
             background: linear-gradient(135deg, #020617 0%, #0f172a 42%, #020617 100%);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 54px rgba(2, 6, 23, 0.3);
             isolation: isolate;
+            transition: background 0.45s ease, box-shadow 0.45s ease;
         }
 
         .uuid-snippet-stage::before,
@@ -674,6 +677,7 @@
             border-radius: 999px;
             filter: blur(20px);
             opacity: 0.8;
+            transition: opacity 0.45s ease;
         }
 
         .uuid-snippet-stage::before {
@@ -693,14 +697,16 @@
         }
 
         #uuidSnippetTextarea {
+            display: block;
             position: relative;
             z-index: 1;
+            box-sizing: border-box;
             width: 100%;
             min-height: 380px;
             max-height: 62vh;
             padding: 22px 20px 20px;
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            border-radius: 18px;
+            border: 0;
+            border-radius: var(--uuid-snippet-surface-radius);
             font-size: 11px;
             line-height: 1.7;
             background: linear-gradient(180deg, rgba(7, 13, 30, 0.94), rgba(2, 6, 23, 0.96)) !important;
@@ -708,9 +714,22 @@
             font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
             resize: vertical;
             overflow: auto;
-            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08), inset 0 0 40px rgba(6, 182, 212, 0.08);
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12), inset 0 0 40px rgba(6, 182, 212, 0.08);
             transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease, box-shadow 0.75s ease, border-color 0.45s ease;
             tab-size: 4;
+        }
+
+        .uuid-snippet-stage.is-ready,
+        .uuid-snippet-stage.is-error {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .uuid-snippet-stage.is-ready::before,
+        .uuid-snippet-stage.is-ready::after,
+        .uuid-snippet-stage.is-error::before,
+        .uuid-snippet-stage.is-error::after {
+            opacity: 0;
         }
 
         #uuidSnippetTextarea::selection {
@@ -750,12 +769,13 @@
             position: absolute;
             inset: 0;
             z-index: 2;
+            box-sizing: border-box;
             opacity: 0;
             visibility: hidden;
             transform: scale(0.985);
             transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
             pointer-events: none;
-            border-radius: 18px;
+            border-radius: var(--uuid-snippet-surface-radius);
             overflow: hidden;
             background: linear-gradient(145deg, rgba(2, 6, 23, 0.94), rgba(2, 6, 23, 0.76));
         }
@@ -830,41 +850,9 @@
             animation: uuidSnippetAuraPulse 3s ease-in-out infinite;
         }
 
-        .uuid-snippet-display-header {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-            right: 18px;
-            z-index: 2;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .uuid-snippet-chip {
-            padding: 7px 12px;
-            border-radius: 999px;
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            background: rgba(7, 13, 30, 0.72);
-            color: #d8f3ff;
-            font-size: 12px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            box-shadow: inset 0 0 16px rgba(14, 165, 233, 0.08);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-        }
-
-        .uuid-snippet-chip-live {
-            color: #67e8f9;
-            animation: uuidSnippetBadgePulse 1.8s ease-in-out infinite;
-        }
-
         .uuid-snippet-display-center {
             position: absolute;
-            inset: 72px 18px 18px;
+            inset: 0;
         }
 
         .uuid-snippet-display-core {
@@ -914,19 +902,20 @@
             position: relative;
             z-index: 2;
             display: block;
+            box-sizing: border-box;
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 24px 28px;
-            border-radius: 18px;
-            border: 1px solid rgba(125, 211, 252, 0.12);
+            border-radius: calc(var(--uuid-snippet-surface-radius) - 1px);
+            border: 0;
             background: linear-gradient(180deg, rgba(2, 6, 23, 0.74), rgba(2, 6, 23, 0.54));
             color: rgba(186, 230, 253, 0.9);
             font-size: 11px;
             line-height: 1.55;
             letter-spacing: 0.04em;
             text-shadow: 0 0 12px rgba(125, 211, 252, 0.12);
-            box-shadow: inset 0 0 28px rgba(8, 47, 73, 0.5);
+            box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.12), inset 0 0 28px rgba(8, 47, 73, 0.5);
             white-space: pre-wrap;
             overflow: hidden;
             -webkit-backdrop-filter: blur(12px);
@@ -954,14 +943,16 @@
 
         .btn-uuid-copy {
             position: relative;
+            box-sizing: border-box;
             overflow: hidden;
             min-width: 0;
             min-height: 52px;
-            border: 1px solid rgba(125, 211, 252, 0.16);
+            border: 0;
+            border-radius: 12px;
             --uuid-copy-progress: 0%;
             background: linear-gradient(135deg, rgba(29, 78, 216, 0.92) 0, rgba(79, 70, 229, 0.92) 100%);
             color: #fff;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 24px rgba(37, 99, 235, 0.24);
+            box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 24px rgba(37, 99, 235, 0.24);
         }
 
         .btn-uuid-copy::before,
@@ -970,11 +961,12 @@
             position: absolute;
             inset: 0;
             pointer-events: none;
+            border-radius: inherit;
         }
 
         .btn-uuid-copy::before {
             background: linear-gradient(90deg, rgba(34, 211, 238, 0.88) 0%, rgba(96, 165, 250, 0.94) 48%, rgba(192, 132, 252, 0.9) 100%);
-            clip-path: inset(0 calc(100% - var(--uuid-copy-progress)) 0 0 round 14px);
+            clip-path: inset(0 calc(100% - var(--uuid-copy-progress)) 0 0);
             opacity: 0.9;
             transition: clip-path 0.24s ease-out, opacity 0.24s ease;
         }
@@ -1007,12 +999,12 @@
             cursor: wait;
             transform: none;
             color: #eff6ff;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 22px rgba(14, 165, 233, 0.18);
+            box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 22px rgba(14, 165, 233, 0.18);
         }
 
         .btn-uuid-copy[disabled][data-phase="fail"] {
             background: linear-gradient(135deg, rgba(153, 27, 27, 0.94) 0, rgba(220, 38, 38, 0.92) 100%);
-            border-color: rgba(248, 113, 113, 0.22);
+            box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 22px rgba(239, 68, 68, 0.14);
         }
 
         .btn-uuid-copy[disabled][data-phase="fail"]::before {
@@ -1021,7 +1013,7 @@
 
         .btn-uuid-copy[data-phase="ready"] {
             background: linear-gradient(135deg, #2563eb 0, #1d4ed8 100%);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 24px rgba(37, 99, 235, 0.28);
+            box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 24px rgba(37, 99, 235, 0.28);
         }
 
         .btn-uuid-copy[data-phase="ready"]::before {
@@ -1029,7 +1021,9 @@
         }
 
         .btn-uuid-close {
+            box-sizing: border-box;
             min-height: 52px;
+            border-radius: 12px;
             background: linear-gradient(135deg, #e5e7eb 0, #d1d5db 100%);
             color: #374151;
         }
@@ -1065,7 +1059,7 @@
             }
 
             .uuid-snippet-stage {
-                border-radius: 18px;
+                --uuid-snippet-surface-radius: 18px;
             }
 
             #uuidSnippetTextarea {
@@ -1075,14 +1069,8 @@
                 font-size: 10px;
             }
 
-            .uuid-snippet-display-header {
-                top: 14px;
-                left: 14px;
-                right: 14px;
-            }
-
             .uuid-snippet-display-center {
-                inset: 74px 14px 16px;
+                inset: 0;
             }
 
             .uuid-snippet-display-rings {
@@ -1101,7 +1089,7 @@
             }
 
             .uuid-snippet-buttons {
-                grid-template-columns: minmax(0, 1fr) 96px;
+                grid-template-columns: 1fr;
             }
         }
 
@@ -7304,10 +7292,6 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         <span></span>
                     </div>
                     <div class="uuid-snippet-display-pulse"></div>
-                    <div class="uuid-snippet-display-header">
-                        <span class="uuid-snippet-chip">Quantum Vault</span>
-                        <span class="uuid-snippet-chip uuid-snippet-chip-live" id="uuidSnippetStatusBadge">BOOT</span>
-                    </div>
                     <div class="uuid-snippet-display-center">
                         <div class="uuid-snippet-display-core">
                             <span></span>
@@ -10361,6 +10345,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         let uuidSnippetDisplayToken = 0;
         let uuidSnippetDisplayProgressValue = 0;
         let uuidSnippetDisplayProgressTarget = 0;
+        let uuidSnippetRawCode = '';
+        const uuidSnippetLastLiteralVariants = new Map();
 
         const UUID_SNIPPET_REVEAL_CHARSET = '01<>/\\\\{}[]=+-_*#@$%&ABCDEFGHJKLMNPQRSTUVWXYZ';
         const UUID_SNIPPET_STATUS_TEXT = {
@@ -10461,7 +10447,6 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 stage: document.getElementById('uuidSnippetStage'),
                 textarea: document.getElementById('uuidSnippetTextarea'),
                 preview: document.getElementById('uuidSnippetPreview'),
-                statusBadge: document.getElementById('uuidSnippetStatusBadge'),
                 copyBtn: document.getElementById('uuidSnippetCopyBtn'),
                 copyBtnLabel: document.getElementById('uuidSnippetCopyBtnLabel'),
                 flash: document.getElementById('uuidSnippetDisplayFlash')
@@ -10502,10 +10487,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         }
 
         function setUUIDSnippetDisplayStatus(label, meta, badgeKey) {
-            const { statusBadge, copyBtn, copyBtnLabel } = getUUIDSnippetDisplayElements();
-            if (statusBadge) {
-                statusBadge.textContent = UUID_SNIPPET_STATUS_TEXT[badgeKey] || UUID_SNIPPET_STATUS_TEXT.boot;
-            }
+            const { copyBtn, copyBtnLabel } = getUUIDSnippetDisplayElements();
             if (copyBtn) {
                 copyBtn.dataset.phase = badgeKey || 'boot';
                 copyBtn.title = meta ? `${label}：${meta}` : (label || '');
@@ -10581,8 +10563,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             return lines.join('\n');
         }
 
+        function normalizeUUIDSnippetCodeForDisplay(sourceCode) {
+            return String(sourceCode || '').replace(/\t/g, '    ');
+        }
+
         function extractUUIDSnippetPreviewSource(sourceCode) {
-            const lines = String(sourceCode || '')
+            const lines = normalizeUUIDSnippetCodeForDisplay(sourceCode)
                 .split(/\r?\n/)
                 .slice(0, 22)
                 .map((line) => line.slice(0, 108));
@@ -10634,6 +10620,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         function startUUIDSnippetPresentation(uuidValue) {
             const { textarea, preview } = getUUIDSnippetDisplayElements();
             clearUUIDSnippetDisplayTimers();
+            uuidSnippetRawCode = '';
             uuidSnippetDisplayToken += 1;
             uuidSnippetDisplayProgressTarget = 18;
             setUUIDSnippetProgress(3);
@@ -10684,8 +10671,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
 
             const { textarea, preview, flash } = getUUIDSnippetDisplayElements();
+            uuidSnippetRawCode = String(finalScript || '');
+            const displayScript = normalizeUUIDSnippetCodeForDisplay(uuidSnippetRawCode);
             if (textarea) {
-                textarea.value = finalScript;
+                textarea.value = displayScript;
                 textarea.scrollTop = 0;
             }
 
@@ -10701,7 +10690,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             setUUIDSnippetStageState('revealing');
             setUUIDSnippetDisplayStatus('源码晶格重组完成', '正在解除视觉掩码并写入真实 Snippet.js', 'reveal');
 
-            const previewSource = extractUUIDSnippetPreviewSource(finalScript);
+            const previewSource = extractUUIDSnippetPreviewSource(displayScript);
             const revealStart = performance.now();
             const revealDuration = 1650;
 
@@ -10752,6 +10741,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             const { textarea, preview } = getUUIDSnippetDisplayElements();
             clearUUIDSnippetDisplayTimers();
+            uuidSnippetRawCode = '';
             setUUIDSnippetStageState('processing');
             setUUIDSnippetDisplayStatus('源码生成失败', '远端内容未能完成解码，正在释放错误信息', 'fail');
             setUUIDSnippetProgress(100);
@@ -10812,7 +10802,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
         async function copyUUIDSnippetCode() {
             const textarea = document.getElementById('uuidSnippetTextarea');
-            const code = textarea ? textarea.value : '';
+            const code = uuidSnippetRawCode || (textarea ? textarea.value : '');
             if (!code) {
                 showToast('暂无可复制代码', 'error');
                 return;
@@ -10837,7 +10827,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     tempTextarea.remove();
                     if (!copied) throw new Error('copy failed');
                 }
-                showToast('专属代码已复制', 'success');
+                showToast('Snippet.js 代码已复制', 'success');
             } catch (error) {
                 showToast('复制失败，请手动复制代码', 'error');
             }
@@ -10850,6 +10840,120 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 throw new Error('未找到EDT.min.js中的userID与Password配置');
             }
             return sourceCode.replace(linePattern, `$1${userID}$3${password}$5`);
+        }
+
+        function encodeSnippetCharAsUnicodeEscape(char) {
+            return `\\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`;
+        }
+
+        function escapeSnippetLiteralForRegExp(literal) {
+            return literal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function randomizeSnippetLiteralCase(literal) {
+            const letterIndexes = [];
+            for (let i = 0; i < literal.length; i++) {
+                if (/[a-z]/i.test(literal[i])) {
+                    letterIndexes.push(i);
+                }
+            }
+
+            if (!letterIndexes.length) {
+                return { value: literal, changedLetters: 0 };
+            }
+
+            const forcedUpperIndex = letterIndexes[Math.floor(Math.random() * letterIndexes.length)];
+            let changedLetters = 0;
+            let value = '';
+
+            for (let i = 0; i < literal.length; i++) {
+                const currentChar = literal[i];
+                if (!/[a-z]/i.test(currentChar)) {
+                    value += currentChar;
+                    continue;
+                }
+
+                const nextChar = (i === forcedUpperIndex || Math.random() < 0.5)
+                    ? currentChar.toUpperCase()
+                    : currentChar.toLowerCase();
+                if (nextChar !== currentChar) {
+                    changedLetters += 1;
+                }
+                value += nextChar;
+            }
+
+            return { value, changedLetters };
+        }
+
+        function randomizeSnippetLiteralUnicodeEscapes(literal) {
+            const forcedIndex = Math.floor(Math.random() * literal.length);
+            let escapedChars = 0;
+            let value = '';
+
+            for (let i = 0; i < literal.length; i++) {
+                const currentChar = literal[i];
+                const shouldEscape = i === forcedIndex || Math.random() < 0.5;
+                if (shouldEscape) {
+                    value += encodeSnippetCharAsUnicodeEscape(currentChar);
+                    escapedChars += 1;
+                } else {
+                    value += currentChar;
+                }
+            }
+
+            return { value, escapedChars };
+        }
+
+        function randomizeSnippetLiteralOccurrences(sourceCode, literal, options = {}) {
+            const pattern = new RegExp(escapeSnippetLiteralForRegExp(literal), 'g');
+            const matches = sourceCode.match(pattern);
+            if (!matches || !matches.length) {
+                return {
+                    code: sourceCode,
+                    occurrences: 0,
+                    escapedChars: 0,
+                    changedLetters: 0
+                };
+            }
+
+            const lastSignature = uuidSnippetLastLiteralVariants.get(literal) || '';
+            let variantSignature = '';
+            let escapedChars = 0;
+            let changedLetters = 0;
+            let randomizedCode = sourceCode;
+
+            for (let attempt = 0; attempt < 8; attempt++) {
+                const signatureParts = [];
+                escapedChars = 0;
+                changedLetters = 0;
+                randomizedCode = sourceCode.replace(pattern, () => {
+                    let variantValue = literal;
+                    if (options.randomizeCase) {
+                        const caseVariant = randomizeSnippetLiteralCase(variantValue);
+                        variantValue = caseVariant.value;
+                        changedLetters += caseVariant.changedLetters;
+                    }
+
+                    const unicodeVariant = randomizeSnippetLiteralUnicodeEscapes(variantValue);
+                    variantValue = unicodeVariant.value;
+                    escapedChars += unicodeVariant.escapedChars;
+                    signatureParts.push(variantValue);
+                    return variantValue;
+                });
+
+                variantSignature = signatureParts.join('||');
+                if (variantSignature !== lastSignature) {
+                    break;
+                }
+            }
+
+            uuidSnippetLastLiteralVariants.set(literal, variantSignature);
+            return {
+                code: randomizedCode,
+                occurrences: matches.length,
+                escapedChars,
+                changedLetters
+            };
         }
 
         function buildSnippetDictionaryMap(dictionaryData) {
@@ -10895,6 +10999,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             const uuidValue = (nodeUUIDInput.value || '').trim();
             if (!uuidValue) {
+                uuidSnippetRawCode = '';
                 textarea.value = '';
                 setUUIDSnippetCopyButtonEnabled(false);
                 clearUUIDSnippetDisplayTimers();
@@ -10920,7 +11025,32 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 const dictionaryData = JSON.parse(rawDictionaryText);
                 const dictionaryMap = buildSnippetDictionaryMap(dictionaryData);
                 updateUUIDSnippetProcessingStage(86, 'mesh', '字符晶格正在重映射', `字典矩阵已生成 ${dictionaryMap.size} 组替换通道`);
-                const finalScript = applySnippetDictionary(replacedScript, dictionaryMap);
+                const dictionaryAppliedScript = applySnippetDictionary(replacedScript, dictionaryMap);
+                const socketsVariantResult = randomizeSnippetLiteralOccurrences(dictionaryAppliedScript, 'cloudflare:sockets');
+                const proxyipVariantResult = randomizeSnippetLiteralOccurrences(
+                    socketsVariantResult.code,
+                    'proxyip.cmliussss.net',
+                    { randomizeCase: true }
+                );
+                const finalScript = proxyipVariantResult.code;
+                const variantSummaries = [];
+
+                if (socketsVariantResult.occurrences > 0) {
+                    variantSummaries.push(
+                        `cloudflare:sockets ${socketsVariantResult.occurrences} 处 / ${socketsVariantResult.escapedChars} 个 Unicode 转义`
+                    );
+                }
+                if (proxyipVariantResult.occurrences > 0) {
+                    variantSummaries.push(
+                        `proxyip.cmliussss.net ${proxyipVariantResult.occurrences} 处 / ${proxyipVariantResult.changedLetters} 个大小写扰动 / ${proxyipVariantResult.escapedChars} 个 Unicode 转义`
+                    );
+                }
+
+                if (variantSummaries.length > 0) {
+                    updateUUIDSnippetProcessingStage(94, 'mesh', '目标标识已完成随机扰动', variantSummaries.join(' ; '));
+                } else {
+                    updateUUIDSnippetProcessingStage(94, 'mesh', '未发现目标标识', '跳过字符串扰动步骤，直接进入最终揭晓');
+                }
 
                 finishUUIDSnippetPresentation(finalScript, animationToken);
                 showToast('Snippets.js专属代码已生成', 'success');
@@ -13413,8 +13543,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         async function fetchWithAutoMirror(originalUrl, description = '资源') {
             // 备用域名列表（按优先级）
             const mirrorDomains = [
+                'https://github.090227.xyz/raw.githubusercontent.com',
+                'https://github.cmliussss.com/raw.githubusercontent.com',
                 'https://github.cmliussss.net/raw.githubusercontent.com',
-                'https://github.cmliussss.com/raw.githubusercontent.com'
             ];
 
             // 第一次尝试：使用原始URL
