@@ -6767,13 +6767,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
     </div>
     </div>
 
-    <!-- Snippets.js 生成弹窗 -->
-    <div class="modal-overlay" id="uuidSnippetModal" onclick="closeUUIDSnippetModal(event)">
+    <!-- Snippet.js 生成弹窗 -->
+    <div class="modal-overlay" id="uuidSnippetModal">
         <div class="modal" onclick="event.stopPropagation()">
-            <button type="button" class="modal-close" onclick="closeUUIDSnippetModal()">&times;</button>
-            <h2 id="uuidSnippetTitle">🧩 生成专属后端源码</h2>
+            <h2 id="uuidSnippetTitle">💎 生成专属 Snippet.js 源码</h2>
             <div class="form-group" style="margin-bottom: 0;">
-                <textarea id="uuidSnippetTextarea" title="生成专属后端源码" readonly></textarea>
+                <textarea id="uuidSnippetTextarea" title="生成专属 Snippet.js 源码" readonly></textarea>
             </div>
             <div class="uuid-snippet-buttons">
                 <button type="button" class="btn btn-uuid-copy" id="uuidSnippetCopyBtn" onclick="copyUUIDSnippetCode()"
@@ -9887,10 +9886,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             return hex;
         }
 
-        function closeUUIDSnippetModal(event) {
-            if (event && event.target && event.target.id !== 'uuidSnippetModal') {
-                return;
-            }
+        function closeUUIDSnippetModal() {
             const modal = document.getElementById('uuidSnippetModal');
             if (modal) {
                 modal.classList.remove('show');
