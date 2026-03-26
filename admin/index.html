@@ -9826,7 +9826,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         function copySubscription(elementId) {
             const element = document.getElementById(elementId);
             navigator.clipboard.writeText(element.value).then(() => {
-                showToast('已复制到剪贴板', 'success');
+                showToast('📋 已复制到剪贴板', 'success');
             }).catch(() => {
                 showToast('复制失败', 'error');
             });
@@ -10634,7 +10634,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             fx.style.setProperty('--gift-x-drift', `${(Math.random() * 90 - 45).toFixed(1)}px`);
             fx.style.setProperty('--gift-y-lift', `${(140 + Math.random() * 40).toFixed(1)}px`);
             fx.style.setProperty('--gift-rotate', `${(Math.random() * 70 - 35).toFixed(1)}deg`);
-            fx.style.setProperty('--gift-duration', `${(840 + Math.random() * 240).toFixed(0)}ms`);
+            fx.style.setProperty('--gift-duration', `${(640 + Math.random() * 240).toFixed(0)}ms`);
             document.body.appendChild(fx);
 
             setTimeout(() => fx.remove(), 1300);
@@ -10808,7 +10808,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 copyBtn.setAttribute('aria-label', meta ? `${label}：${meta}` : (label || ''));
             }
             if (copyBtnLabel && copyBtn?.disabled) {
-                copyBtnLabel.textContent = badgeKey === 'fail' ? '源码重组失败' : '等待源码混淆重组';
+                copyBtnLabel.textContent = badgeKey === 'fail' ? '源码重组失败' : '🔐 等待源码混淆重组';
             }
         }
 
@@ -11081,7 +11081,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 }
             }
             if (copyBtnLabel && enabled) {
-                copyBtnLabel.textContent = '点击复制代码';
+                copyBtnLabel.textContent = '📋 点击复制代码';
             }
         }
 
@@ -11129,7 +11129,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     tempTextarea.remove();
                     if (!copied) throw new Error('copy failed');
                 }
-                showToast('Snippet.js 代码已复制', 'success');
+                showToast('📋 Snippet.js 代码已复制', 'success');
             } catch (error) {
                 showToast('复制失败，请手动复制代码', 'error');
             }
@@ -11419,7 +11419,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             try {
                 if (navigator.clipboard && window.isSecureContext) {
                     await navigator.clipboard.writeText(uuidValue);
-                    showToast('已复制UUID的值', 'success');
+                    showToast('📋 已复制UUID的值', 'success');
                     return;
                 }
 
@@ -11439,7 +11439,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 tempTextarea.remove();
 
                 if (copied) {
-                    showToast('已复制UUID的值', 'success');
+                    showToast('📋 已复制UUID的值', 'success');
                 } else {
                     showToast('复制失败，请手动复制UUID', 'error');
                 }
