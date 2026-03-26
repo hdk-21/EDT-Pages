@@ -704,11 +704,11 @@
             width: 100%;
             min-height: 380px;
             max-height: 62vh;
-            padding: 22px 20px 20px;
+            padding: 28px 20px 20px;
             border: 0;
             border-radius: var(--uuid-snippet-surface-radius);
             font-size: 11px;
-            line-height: 1.7;
+            line-height: 1.5;
             background: linear-gradient(180deg, rgba(7, 13, 30, 0.94), rgba(2, 6, 23, 0.96)) !important;
             color: #d8f3ff !important;
             font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
@@ -724,6 +724,16 @@
             -webkit-user-select: none;
             user-select: none;
             box-shadow: inset 0 0 0 1px rgba(103, 232, 249, 0.04);
+        }
+
+        .uuid-snippet-stage.is-ready #uuidSnippetTextarea {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            pointer-events: auto;
+            -webkit-user-select: text;
+            user-select: text;
+            animation: uuidSnippetTextareaReveal 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
         .uuid-snippet-stage.is-ready,
@@ -761,11 +771,16 @@
 
         .uuid-snippet-stage.is-processing #uuidSnippetDisplay,
         .uuid-snippet-stage.is-revealing #uuidSnippetDisplay,
-        .uuid-snippet-stage.is-ready #uuidSnippetDisplay,
         .uuid-snippet-stage.is-error #uuidSnippetDisplay {
             opacity: 1;
             visibility: visible;
             transform: none;
+        }
+
+        .uuid-snippet-stage.is-ready #uuidSnippetDisplay {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.01);
         }
 
         .uuid-snippet-stage.is-ready #uuidSnippetDisplay,
@@ -7277,7 +7292,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             <div class="uuid-snippet-buttons">
                 <button type="button" class="btn btn-uuid-copy" id="uuidSnippetCopyBtn" onclick="copyUUIDSnippetCode()"
                     data-phase="boot" disabled><span class="uuid-copy-btn-label"
-                        id="uuidSnippetCopyBtnLabel">等待源码重组完成</span></button>
+                        id="uuidSnippetCopyBtnLabel">等待源码混淆重组</span></button>
                 <button type="button" class="btn btn-uuid-close" onclick="closeUUIDSnippetModal()">关闭</button>
             </div>
         </div>
@@ -10462,7 +10477,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 copyBtn.setAttribute('aria-label', meta ? `${label}：${meta}` : (label || ''));
             }
             if (copyBtnLabel && copyBtn?.disabled) {
-                copyBtnLabel.textContent = badgeKey === 'fail' ? '源码重组失败' : '等待源码重组完成';
+                copyBtnLabel.textContent = badgeKey === 'fail' ? '源码重组失败' : '等待源码混淆重组';
             }
         }
 
@@ -10538,8 +10553,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         function extractUUIDSnippetPreviewSource(sourceCode) {
             const lines = normalizeUUIDSnippetCodeForDisplay(sourceCode)
                 .split(/\r?\n/)
-                .slice(0, 22)
-                .map((line) => line.slice(0, 108));
+                .slice(0, 22);
             return lines.join('\n');
         }
 
