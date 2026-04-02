@@ -15334,7 +15334,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             if (value.includes('.') && !value.includes(':')) {
                 const parts = value.split('.');
                 if (parts.length === 4) {
-                    return `${parts[0]}.***.**.**`;
+                    return `${parts[0]}.${'*'.repeat(parts[1].length)}.${'*'.repeat(parts[2].length)}.${'*'.repeat(parts[3].length)}`;
                 }
             }
 
@@ -15454,6 +15454,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             fieldElement.dataset.maskType = maskType;
             fieldElement.dataset.displayState = 'ready';
             renderNetworkFieldDisplay(fieldElement);
+
+            // IP 字段加载完成后立即就绪点击查询，不等待其它卡片
+            if (maskType === 'ip') {
+                makeIpClickable();
+            }
         }
 
         function setNetworkFieldError(fieldId, errorText) {
@@ -15463,6 +15468,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             stopNetworkFieldAnimation(fieldElement);
             fieldElement.dataset.rawValue = '';
             fieldElement.dataset.displayState = 'error';
+            fieldElement.classList.remove('clickable', 'is-loading');
+            fieldElement.removeAttribute('title');
+            fieldElement.removeAttribute('aria-busy');
             fieldElement.innerHTML = `<span class="error">${errorText}</span>`;
         }
 
@@ -15473,6 +15481,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             stopNetworkFieldAnimation(fieldElement);
             fieldElement.dataset.rawValue = '';
             fieldElement.dataset.displayState = 'empty';
+            fieldElement.classList.remove('clickable', 'is-loading');
+            fieldElement.removeAttribute('title');
+            fieldElement.removeAttribute('aria-busy');
             fieldElement.textContent = '';
         }
 
@@ -15897,6 +15908,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                 element.addEventListener('click', function (event) {
                     event.stopPropagation();
+
+                    if (this.dataset.displayState !== 'ready') {
+                        return;
+                    }
+
                     const rawIp = String(this.dataset.rawValue || this.textContent || '').trim();
 
                     // 跳过显示"加载中..."或"未知"的元素
