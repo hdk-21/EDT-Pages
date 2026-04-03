@@ -16336,25 +16336,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 };
             });
 
+            let fastestSuccess;
             try {
-                const fastestSuccess = await Promise.any(requestTasks.map(task => task.promise));
-                requestTasks.forEach(task => task.cancel && task.cancel());
-
-                const info = await fetchIpInfoByIp(fastestSuccess.requestIp);
-                const ip = String(info.ip || fastestSuccess.requestIp || '未知').trim();
-                const location = formatIpInfoLocation(info);
-
-                setNetworkFieldValue('ipip-ip', ip, 'ip');
-                setNetworkFieldValue('ipip-country', location || '未知', 'location');
-                applyNetworkCardFlag('ipip-country');
-                setStatus('status-ipip', 'success');
-
-                if (titleElement) {
-                    titleElement.innerHTML = `<span class="status-indicator" id="status-ipip"></span><div class="title-text"><div class="title-main">国内测试</div><div class="title-subtitle">${fastestSuccess.providerName}</div></div>`;
-                    setStatus('status-ipip', 'success');
-                }
-
-                console.log(`[国内测试] 成功: IP=${ip}, 位置=${location}, 来源=${fastestSuccess.source}`);
+                fastestSuccess = await Promise.any(requestTasks.map(task => task.promise));
             } catch (error) {
                 requestTasks.forEach(task => task.cancel && task.cancel());
 
@@ -16367,6 +16351,36 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 }
                 setStatus('status-ipip', 'error');
                 console.error('国内测试 所有测试源都失败:', error);
+                return;
+            }
+
+            requestTasks.forEach(task => task.cancel && task.cancel());
+
+            const fallbackIp = String(fastestSuccess.requestIp || '未知').trim() || '未知';
+            setNetworkFieldValue('ipip-ip', fallbackIp, 'ip');
+            clearNetworkFieldValue('ipip-country');
+            applyNetworkCardFlag('ipip-country');
+
+            if (titleElement) {
+                titleElement.innerHTML = `<span class="status-indicator" id="status-ipip"></span><div class="title-text"><div class="title-main">国内测试</div><div class="title-subtitle">${fastestSuccess.providerName}</div></div>`;
+                setStatus('status-ipip', 'loading');
+            }
+
+            try {
+                const info = await fetchIpInfoByIp(fastestSuccess.requestIp);
+                const ip = String(info.ip || fastestSuccess.requestIp || '未知').trim();
+                const location = formatIpInfoLocation(info);
+
+                setNetworkFieldValue('ipip-ip', ip, 'ip');
+                setNetworkFieldValue('ipip-country', location || '未知', 'location');
+                applyNetworkCardFlag('ipip-country');
+                setStatus('status-ipip', 'success');
+                console.log(`[国内测试] 成功: IP=${ip}, 位置=${location}, 来源=${fastestSuccess.source}`);
+            } catch (detailError) {
+                setNetworkFieldValue('ipip-country', '未知', 'location');
+                applyNetworkCardFlag('ipip-country');
+                setStatus('status-ipip', 'success');
+                console.warn(`[国内测试] 已获取IP=${fallbackIp}，但查询详细信息失败:`, detailError);
             }
         }
 
@@ -16510,18 +16524,29 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     throw new Error('all outside entry sources failed');
                 }
 
-                const info = await fetchIpInfoByIp(fastestSuccess.requestIp);
-                const twIp = String(info.ip || fastestSuccess.requestIp || '未知').trim();
-                const twLoc = formatIpInfoLocation(info);
-                setNetworkFieldValue('twitter-ip', twIp, 'ip');
-                setNetworkFieldValue('twitter-country', twLoc, 'location');
+                const fallbackIp = String(fastestSuccess.requestIp || '未知').trim() || '未知';
+                setNetworkFieldValue('twitter-ip', fallbackIp, 'ip');
+                clearNetworkFieldValue('twitter-country');
                 applyNetworkCardFlag('twitter-country');
-                setStatus('status-twitter', 'success');
                 renderTwitterTitle(fastestSuccess.providerName);
                 renderTwitterTip(fastestSuccess.providerName);
-                setStatus('status-twitter', 'success');
+                setStatus('status-twitter', 'loading');
 
-                console.log(`[墙外测试] 成功: IP=${twIp}, 位置=${twLoc}, 来源=${fastestSuccess.providerName}`);
+                try {
+                    const info = await fetchIpInfoByIp(fastestSuccess.requestIp);
+                    const twIp = String(info.ip || fastestSuccess.requestIp || '未知').trim();
+                    const twLoc = formatIpInfoLocation(info);
+                    setNetworkFieldValue('twitter-ip', twIp, 'ip');
+                    setNetworkFieldValue('twitter-country', twLoc, 'location');
+                    applyNetworkCardFlag('twitter-country');
+                    setStatus('status-twitter', 'success');
+                    console.log(`[墙外测试] 成功: IP=${twIp}, 位置=${twLoc}, 来源=${fastestSuccess.providerName}`);
+                } catch (detailError) {
+                    setNetworkFieldValue('twitter-country', '未知', 'location');
+                    applyNetworkCardFlag('twitter-country');
+                    setStatus('status-twitter', 'success');
+                    console.warn(`[墙外测试] 已获取IP=${fallbackIp}，但查询详细信息失败:`, detailError);
+                }
             } catch (error) {
                 setNetworkFieldError('twitter-ip', '翻墙失败');
                 clearNetworkFieldValue('twitter-country');
