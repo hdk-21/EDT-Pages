@@ -7220,7 +7220,7 @@
                 </div>
                 <div class="header-buttons">
                     <button type="button" class="btn btn-mode-toggle" id="modeToggleBtn" onclick="toggleUserMode()">🐣
-                        我是小白！我想简单点！</button>
+                        简约模式</button>
                     <button type="button" class="btn btn-danger btn-reset"
                         onclick="resetConfigWithConfirm()">⚠️重置配置</button>
                     <button type="button" class="btn btn-primary" onclick="logout()">👋退出登录</button>
@@ -7308,7 +7308,7 @@
                                 <div class="location-text">
                                     <span id="ipip-country" class="country-text">-</span>
                                 </div>
-                                <div class="network-tip">· 您访问国内站点所使用的IP</div>
+                                <div class="network-tip">· 您访问中国大陆境内站点所使用的IP</div>
                             </div>
                         </div>
 
@@ -7316,8 +7316,8 @@
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-overseas"></span>
                                 <div class="title-text">
-                                    <div class="title-main">国外测试</div>
-                                    <div class="title-subtitle">漏网之鱼</div>
+                                    <div class="title-main">境外测试</div>
+                                    <div class="title-subtitle">其他</div>
                                 </div>
                             </div>
                             <div class="network-info-content">
@@ -7325,7 +7325,7 @@
                                 <div class="location-text">
                                     <span id="overseas-country" class="country-text">-</span>
                                 </div>
-                                <div class="network-tip">· 您访问没有被封的国外站点所使用的IP</div>
+                                <div class="network-tip">· 您访问没有被封的境外站点所使用的IP</div>
                             </div>
                         </div>
 
@@ -7350,7 +7350,7 @@
                             <div class="network-card-title">
                                 <span class="status-indicator" id="status-twitter"></span>
                                 <div class="title-text">
-                                    <div class="title-main">墙外测试</div>
+                                    <div class="title-main">境外测试</div>
                                     <div class="title-subtitle">!CN-Test</div>
                                 </div>
                             </div>
@@ -7359,12 +7359,13 @@
                                 <div class="location-text">
                                     <span id="twitter-country" class="country-text">-</span>
                                 </div>
-                                <div id="twitter-tip" class="network-tip">· 您访问墙外站点所使用的IP</div>
+                                <div id="twitter-tip" class="network-tip">· 您访问境外站点所使用的IP</div>
                             </div>
                         </div>
                     </div>
-                    <small style="font-size: 12px; color: #9ca3af; margin-top: 6px; display: block;">💡 <b>国内测试</b>
-                        是由您梯子的 <b>分流规则</b> 决定的，<b>国外测试</b> 是由您的 <b>优选IP</b> 决定的，而 <b>CF、墙外入口、ChatGPT</b> 是由您的
+
+                    <small style="font-size: 12px; color: #9ca3af; margin-top: 6px; display: block;">💡 <b>中国大陆境内测试</b>
+                        是由您代理应用的 <b>分流规则</b> 决定的，<b>境外测试</b> 是由您的 <b>优选IP</b> 决定的，而 <b>CF、Twitter、ChatGPT</b> 是由您的
                         <b>PROXYIP</b> 决定的。</small>
                     <div class="module-content" style="display: none;" id="network-module-content">
                         <!-- 延迟测试卡片 -->
@@ -7598,9 +7599,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     <div class="form-group" id="transportGroup" style="display: none;">
                         <label>传输协议</label>
                         <select id="transport" title="传输协议" onchange="handleTransportChange()">
-                            <option value="ws">WebSocket 稳！</option>
-                            <option value="xhttp">XHTTP 大量消耗请求数！[封号警告，请求已被CDN识别！需等待上下游更新！]</option>
-                            <option value="grpc">gRPC 花里胡笑！</option>
+                            <option value="ws">WebSocket</option>
+                            <option value="xhttp">XHTTP [封号警告]</option>
+                            <option value="grpc">gRPC</option>
                         </select>
                     </div>
 
@@ -7723,10 +7724,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         <div class="input-wrapper">
                             <div class="checkbox-group">
                                 <input type="checkbox" id="enableECH"
-                                    title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
+                                    title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
                                     onchange="handleECHEnableChange()">
                                 <label for="enableECH" class="checkbox-label"
-                                    title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
+                                    title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
                             </div>
                         </div>
                     </div>
@@ -7753,7 +7754,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                                 <option value="https://doh.cmliussss.com/CMLiussss" data-region="international">
                                     https://doh.cmliussss.com/CMLiussss（Google DoH：CM镜像）</option>
                                 <option value="https://dns.alidns.com/dns-query" data-region="domestic">
-                                    https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）小白推荐选这个！！！
+                                    https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）推荐
                                 </option>
                                 <option value="https://sm2.doh.pub/dns-query" data-region="domestic">
                                     https://sm2.doh.pub/dns-query（腾讯国密 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）</option>
@@ -7771,13 +7772,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     </div>
 
                     <div class="form-group" id="echSNIGroup"
-                        title="用于解析 EchConfig 的域名，并非ECH伪装域名！CF ECH伪装域名均为 cloudflare-ech.com ！！！"
+                        title="用于解析 EchConfig 的域名，并非ECH伪装域名。CF ECH伪装域名均为 cloudflare-ech.com 。"
                         style="display: none; align-items: start;">
                         <label for="echSNISelect" style="padding-top: 10px;">EchConfig 解析域名</label>
                         <div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
                             <select id="echSNISelect" style="display: none;" onchange="onEchSNISelectChange()">
                                 <option value="__AUTO__">自动获取（使用节点的伪装域名解析 EchConfig）</option>
-                                <option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）小白推荐选这个！！！
+                                <option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）推荐
                                 </option>
                                 <option value="crypto.cloudflare.com">crypto.cloudflare.com（Cloudflare密码学服务）</option>
                                 <option value="encryptedsni.com">encryptedsni.com（Cloudflare加密SNI）</option>
@@ -8418,7 +8419,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             <!-- 进度条 -->
             <div class="optimize-progress-bar hidden-section" id="optimizeProgressBar">
                 <div class="optimize-progress-fill" id="optimizeProgressFill"></div>
-                <div class="optimize-progress-text" id="optimizeProgressText">0/512 (0.00%) - 成功: 0, 失败: 0</div>
+                <div class="optimize-progress-text" id="optimizeProgressText">0/1024 (0.00%) - 成功: 0, 失败: 0</div>
             </div>
 
             <!-- 结果选项卡 -->
@@ -9373,7 +9374,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             </div>
             <div style="display: flex; gap: 12px; justify-content: center;">
                 <button type="button" class="btn btn-hosts-warning" onclick="dismissHostsMismatchNotification()"
-                    style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">我知道了！24小时内不再提示！</button>
+                    style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">24小时内不再提示</button>
             </div>
         </div>
     </div>
@@ -9612,26 +9613,26 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
         // 延迟测试数据
         const latencySites = [
             {
-                name: '字节抖音',
-                region: '国内',
+                name: '字节跳动/抖音',
+                region: '中国大陆境内',
                 icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#1677FF" d="m19.9 1.5 4.1 1v19l-4.1 1zM6.5 10.9l4.1 1v9l-4 1.1zM0 2.6l4.1 1v16.8l-4.1 1zm17.5 5.6v11.1l-4.2-1v-9z"></path></svg>',
                 url: 'https://lf3-zlink-tos.ugurl.cn/obj/zebra-public/resource_lmmizj_1632398893.png'
             },
             {
                 name: 'Bilibili',
-                region: '国内',
+                region: '中国大陆境内',
                 icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#FB7299" d="M17.813 4.653h.854q2.266.08 3.773 1.574Q23.946 7.72 24 9.987v7.36q-.054 2.266-1.56 3.773c-1.506 1.507-2.262 1.524-3.773 1.56H5.333q-2.266-.054-3.773-1.56C.053 19.614.036 18.858 0 17.347v-7.36q.054-2.267 1.56-3.76t3.773-1.574h.774l-1.174-1.12a1.23 1.23 0 0 1-.373-.906q0-.534.373-.907l.027-.027q.4-.373.92-.373t.92.373L9.653 4.44q.107.106.187.213h4.267a.8.8 0 0 1 .16-.213l2.853-2.747q.4-.373.92-.373c.347 0 .662.151.929.4s.391.551.391.907q0 .532-.373.906zM5.333 7.24q-1.12.027-1.88.773q-.76.748-.786 1.894v7.52q.026 1.146.786 1.893t1.88.773h13.334q1.12-.026 1.88-.773t.786-1.893v-7.52q-.026-1.147-.786-1.894t-1.88-.773zM8 11.107q.56 0 .933.373q.375.374.4.96v1.173q-.025.586-.4.96q-.373.375-.933.374c-.56-.001-.684-.125-.933-.374q-.375-.373-.4-.96V12.44q0-.56.386-.947q.387-.386.947-.386m8 0q.56 0 .933.373q.375.374.4.96v1.173q-.025.586-.4.96q-.373.375-.933.374c-.56-.001-.684-.125-.933-.374q-.375-.373-.4-.96V12.44q.025-.586.4-.96q.373-.373.933-.373"></path></svg>',
                 url: 'https://i0.hdslb.com/bfs/face/member/noface.jpg@24w_24h_1c'
             },
             {
-                name: '腾讯微信',
-                region: '国内',
+                name: '微信',
+                region: '中国大陆境内',
                 icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#09B83E" d="M8.7 2.19C3.9 2.19 0 5.48 0 9.53c0 2.21 1.17 4.2 3 5.55a.6.6 0 0 1 .21.66l-.39 1.48q-.03.11-.04.22c0 .16.13.3.29.3a.3.3 0 0 0 .16-.06l1.9-1.11a.9.9 0 0 1 .72-.1 10 10 0 0 0 2.84.4q.41-.01.81-.05a5.85 5.85 0 0 1 1.93-6.45 8.3 8.3 0 0 1 5.86-1.83c-.58-3.59-4.2-6.35-8.6-6.35m-2.9 3.8c.64 0 1.16.53 1.16 1.18a1.17 1.17 0 0 1-1.16 1.18 1.17 1.17 0 0 1-1.17-1.18c0-.65.52-1.18 1.17-1.18m5.8 0c.65 0 1.17.53 1.17 1.18a1.17 1.17 0 0 1-1.16 1.18 1.17 1.17 0 0 1-1.16-1.18c0-.65.52-1.18 1.16-1.18m5.34 2.87a8 8 0 0 0-5.28 1.78 5.5 5.5 0 0 0-1.78 6.22c.94 2.46 3.66 4.23 6.88 4.23q1.25 0 2.36-.33a.7.7 0 0 1 .6.08l1.59.93.14.04c.13 0 .24-.1.24-.24q-.01-.09-.04-.18l-.33-1.23-.02-.16a.5.5 0 0 1 .2-.4 5.8 5.8 0 0 0 2.5-4.62c0-3.21-2.93-5.84-6.66-6.09zm-2.53 3.27c.53 0 .97.44.97.98a1 1 0 0 1-.97.99 1 1 0 0 1-.97-.99c0-.54.43-.98.97-.98zm4.84 0c.54 0 .97.44.97.98a1 1 0 0 1-.97.99 1 1 0 0 1-.97-.99c0-.54.44-.98.97-.98"></path></svg>',
                 url: 'https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico'
             },
             {
-                name: '阿里淘宝',
-                region: '国内',
+                name: '淘宝',
+                region: '中国大陆境内',
                 icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#E16322" d="M21.31 9.9a3 3 0 1 1 0 1.92.96.96 0 0 1 0-1.92m2.39 3.05H13.3v-.96h4.14V9.76h-2.89v-.77h2.9v-.92h-2.52v.2H13.3v-2.9h1.64v.35l2.52-.3V4.6h1.85v.64c.93-.08 1.76-.13 2.21-.1 1.5.06 2.45.27 2.49 1.26.03 1-1.43 1.9-1.43 1.9l-.45-.43v.2h-2.8v.92h3.22v.77h-3.23v2.23h4.39zM21.53 7.3l-.02-.01s1.38-.76.35-1.27c-.87-.43-5.54.3-6.93.62v.66zM1.88 6.42a1 1 0 0 0 0-2 1 1 0 0 0-1 1 1 1 0 0 0 1 1m3.41-.86a7 7 0 0 0 .37-.72L4.2 4.42s-.6 1.93-1.65 2.83c0 0 1.02.6 1.01.58a10 10 0 0 0 .78-.88l.68-.3a9 9 0 0 1-1.14 1.69l.61.54s.42-.4.88-.9h.53v.9H3.86v.73H5.9v1.72h-.08c-.23-.01-.58-.05-.71-.27-.17-.26-.05-.75-.04-1.04h-1.4l-.06.02s-.52 2.32 1.5 2.27a5.3 5.3 0 0 0 3.46-.92l.2.76 1.17-.48-.79-1.92-.94.3.18.65a3 3 0 0 1-.82.42V9.6h2v-.72h-2v-.9h2v-.72H6.01c.26-.31.46-.6.51-.78l-.62-.17c2.67-.95 4.15-.79 4.13.77v4.12s.16 1.4-1.46 1.3l-.87-.18-.21.83s3.78 1.08 4.1-1.82-.09-4.76-.09-4.76-.34-2.68-6.2-1.02zm-5.23 6.6 1.58.98c1.1-2.38 1.03-2.06 1.3-2.92.29-.87.35-1.54-.13-2.02a10 10 0 0 0-1.6-1.36L.55 7.86l1.21.75s.82.42.43 1.2c-.36.73-2.13 2.34-2.13 2.34M20 19s-.02.53-.67.53c-.6 0-.64-.42-.64-.42q-.39.45-1.07.46c-.76 0-1.3-.51-1.3-1.3 0-.78.56-1.27 1.4-1.27.39 0 .73.15.93.4l.01-.2c0-.56-.3-.8-1-.8q-.51 0-1.02.13.16-.33.3-.45.18-.14.94-.14c1.27 0 1.74.42 1.74 1.42v1.2c0 .32.03.44.38.44m-1.33-.74c0-.48-.25-.75-.64-.75-.4 0-.66.28-.66.76 0 .47.27.76.65.76.39 0 .65-.27.65-.77m5.27-.5c0 1.15-.7 1.82-1.78 1.82-1.1 0-1.77-.67-1.77-1.82 0-1.16.68-1.83 1.77-1.83s1.78.67 1.78 1.83m-1.08 0q0-1.3-.7-1.3t-.69 1.3.7 1.3.69-1.3m-7.14-.05c0 1.17-.65 1.86-1.57 1.86q-.66-.01-1.05-.47s-.1.42-.66.42c-.69 0-.67-.52-.67-.52.4.02.38-.21.38-.43v-2.89c0-.36-.07-.48-.43-.49.02-.1.08-.53.68-.53.82 0 .76.91.76.91v.79q.34-.4 1-.4c.96 0 1.56.65 1.56 1.75m-1.09.08q-.01-1.35-.76-1.35c-.44 0-.74.4-.74 1.1v.36c0 .72.31 1.12.76 1.12q.73 0 .74-1.23m-3.24-.03c0 1.15-.7 1.82-1.78 1.82-1.1 0-1.78-.67-1.78-1.82 0-1.16.68-1.83 1.78-1.83s1.78.67 1.78 1.83m-1.09 0q0-1.3-.7-1.3-.69 0-.68 1.3t.69 1.3q.7 0 .7-1.3m-6-2.72q-.4.11-1.55.1-1.38-.02-1.85-.04c-.52 0-.73.13-.91.66q.45-.13 1.13-.11c.36 0 .42.04.42.3v2.9c0 .28.11.67.72.67.71 0 .84-.52.84-.52-.36 0-.43-.13-.43-.49v-2.56c0-.27.1-.28.47-.28h.26c.55 0 .7-.1.9-.63M7.46 19s-.02.52-.67.52c-.56 0-.64-.4-.64-.4q-.39.45-1.07.45c-.76 0-1.3-.52-1.3-1.3S4.33 17 5.17 17c.39 0 .73.14.93.4v-.2c0-.56-.3-.8-1-.8q-.5 0-1.01.13.15-.33.3-.46.17-.14.94-.14c1.26 0 1.74.43 1.74 1.43v1.2c0 .32.03.44.38.44m-1.33-.75c0-.48-.26-.74-.64-.74-.4 0-.67.28-.67.76 0 .46.28.76.66.76.39 0 .65-.28.65-.78"></path></svg>',
                 url: 'https://img.alicdn.com/imgextra/i2/O1CN01qnQCrN1VkzAWiU4Hs_!!6000000002692-2-tps-33-33.png'
             },
@@ -9693,10 +9694,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             if (!container) return;
             container.innerHTML = '';
 
-            // 按地区排序：国内优先，然后国际
+            // 按地区排序：中国大陆境内优先，然后国际
             const sortedSites = [...latencySites].sort((a, b) => {
-                const aIsChina = a.region === '国内' ? 0 : 1;
-                const bIsChina = b.region === '国内' ? 0 : 1;
+                const aIsChina = a.region === '中国大陆境内' ? 0 : 1;
+                const bIsChina = b.region === '中国大陆境内' ? 0 : 1;
                 return aIsChina - bIsChina;
             });
 
@@ -12647,11 +12648,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 });
 
                 if (!response.ok) throw new Error('保存失败');
-                showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容！', 'success');
+                showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容。', 'success');
                 modifiedSections.delete(section);
                 updateButtonStates();
             } catch (error) {
-                showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试！', 'error');
+                showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试。', 'error');
             }
         }
 
@@ -12873,13 +12874,13 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             if (cardContainer.classList.contains('simple-mode')) {
                 // 切换到高手模式
                 cardContainer.classList.remove('simple-mode');
-                btn.textContent = '🐣 我是小白！我想简单点！';
+                btn.textContent = '🐣 简约模式';
                 localStorage.setItem('userMode', 'expert');
                 showToast('🚀 已切换到高手模式，显示所有功能', 'success');
             } else {
                 // 切换到小白模式
                 cardContainer.classList.add('simple-mode');
-                btn.textContent = '🚀 我是高手！我就要折腾！';
+                btn.textContent = '🚀 专业模式';
                 localStorage.setItem('userMode', 'simple');
                 showToast('🐣 已切换到小白模式，只显示常用功能', 'success');
             }
@@ -12898,10 +12899,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             if (userMode === 'simple') {
                 cardContainer.classList.add('simple-mode');
-                btn.textContent = '🚀 我是高手！我就要折腾！';
+                btn.textContent = '🚀 专业模式';
             } else {
                 cardContainer.classList.remove('simple-mode');
-                btn.textContent = '🐣 我是小白！我想简单点！';
+                btn.textContent = '🐣 简约模式';
             }
         }
 
@@ -15246,7 +15247,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 // 第二步：通过Bot Token向Chat ID推送测试消息
                 const sendUrlParams = new URLSearchParams({
                     chat_id: chatID,
-                    text: '✅ Telegram 通知配置已验证成功！'
+                    text: '✅ Telegram 通知配置已验证成功。'
                 });
                 const sendResult = await requestTelegram('sendMessage', sendUrlParams, getMeResult.base);
                 const sendData = sendResult.data;
@@ -15489,7 +15490,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     statusEl.style.background = 'linear-gradient(135deg, #10b981 0, #059669 100%)';
                     const maxQuota = data.max || 100000;
                     const percentage = (data.total / maxQuota * 100).toFixed(2);
-                    statusEl.textContent = `✅ 验证成功！ 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
+                    statusEl.textContent = `✅ 验证成功。 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
                     confirmBtn.disabled = false;
                     confirmBtn.style.opacity = '1';
                     confirmBtn.dataset.testPassed = 'true';
@@ -16091,7 +16092,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     }
                     document.getElementById('btnAppendAPI').disabled = false;
                     document.getElementById('btnAppendResults').disabled = false;
-                    showToast('✅ API接口验证成功！', 'success');
+                    showToast('✅ API接口验证成功。', 'success');
                 } else {
                     // 接口不可用
                     document.getElementById('apiOptimizeResults').value = '❌ 接口不可用，请检查URL和端口是否正确';
@@ -16261,7 +16262,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
                 if (loc !== 'CN') {
                     console.warn('[在线优选] 警告: 检测到非CN地区访问，可能处于代理/VPN环境');
-                    html += `<div class="ip-detection-warning" style="font-size: 16px; font-weight: 700; color: #dc2626; margin-top: 12px; line-height: 1.6;">⚠️ 检测到您当前很可能处于代理/VPN环境中！请确保处于直连网络环境下再进行在线优选，否则优选测试结果将因为不准确变得毫无意义！</div>`;
+                    html += `<div class="ip-detection-warning" style="font-size: 16px; font-weight: 700; color: #dc2626; margin-top: 12px; line-height: 1.6;">⚠️ 检测到您当前很可能处于代理/VPN环境中。请确保处于直连网络环境下再进行在线优选，否则优选测试结果将因为不准确变得毫无意义。</div>`;
                     // 非CN地区，禁用开始优选按钮
                     btnStart.disabled = true;
                     btnStart.textContent = '仅限CN地区';
@@ -16310,7 +16311,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             const progressText = document.getElementById('optimizeProgressText');
             progressBar.classList.remove('hidden-section');
             progressFill.style.width = '0%';
-            progressText.textContent = '0/512 (0.00%)';
+            progressText.textContent = '0/1024 (0.00%)';
 
             document.getElementById('optimizeResultsTabs').classList.add('hidden-section');
             document.getElementById('optimizeResultsContent').classList.add('hidden-section');
@@ -16360,7 +16361,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 displayResults();
 
                 console.log('[在线优选] 完成: 优选流程已完成');
-                showToast('优选完成！', 'success');
+                showToast('优选完成。', 'success');
 
             } catch (error) {
                 console.error('[在线优选] 优选过程出错:', error);
@@ -16484,6 +16485,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             // 定义各个IP库的原始URLs（仅使用官方地址）
             const urlMap = {
                 'cf-official': 'https://cf.090227.xyz/ips-v4',
+                // 'cf-official': 'https://www.cloudflare.com/ips-v4/',
                 'cm-list': 'https://raw.githubusercontent.com/cmliu/cmliu/main/CF-CIDR.txt',
                 'as13335': 'https://raw.githubusercontent.com/ipverse/asn-ip/master/as/13335/ipv4-aggregated.txt',
                 'as209242': 'https://raw.githubusercontent.com/ipverse/asn-ip/master/as/209242/ipv4-aggregated.txt',
@@ -16535,10 +16537,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             console.log(`[在线优选] 结果: 匹配端口=${targetPort} 的 IP 数量=${filteredIPs.length}`);
 
-            // 如果超过512个，随机选择512个
-            if (filteredIPs.length > 512) {
-                console.log('[在线优选] 提示: IP 数量超过 512，将随机选择 512 个');
-                return shuffleArray(filteredIPs).slice(0, 512);
+            // 如果超过 1024 个，随机选择 1024 个
+            if (filteredIPs.length > 1024) {
+                console.log('[在线优选] 提示: IP 数量超过 1024，将随机选择 1024 个');
+                return shuffleArray(filteredIPs).slice(0, 1024);
             }
 
             return filteredIPs;
@@ -16552,7 +16554,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             console.log(`[在线优选] 调试: CIDR 列表数量=${cidrs.length}`);
 
             const ips = [];
-            const targetCount = 512;
+            const targetCount = 1024;
 
             while (ips.length < targetCount && cidrs.length > 0) {
                 for (const cidr of cidrs) {
@@ -16796,9 +16798,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             optimizeResults = {};
 
             // 根据IP库类型判断是否为优选反代
-            // 只有使用"反向代理列表"IP库时，备注才是"优选反代"，其余一律为"官方优选"
+            // 只有使用"反向代理列表"IP库时，备注才是"CF 反代"，其余一律为"Cloudflare"
             const isReverseProxy = currentIPLibrary === 'reverse-proxy';
-            const type = isReverseProxy ? '优选反代' : '官方优选';
+            const type = isReverseProxy ? 'CF 反代' : 'Cloudflare';
             console.log(`[在线优选] 调试: IP库类型=${currentIPLibrary}, 备注类型=${type}`);
 
             for (const result of results) {
@@ -16918,7 +16920,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     color = '#ef4444'; // 201ms以上红色
                 }
 
-                return `<div class="optimize-result-item" style="color: ${color}; font-weight: bold;">${r.ip}:${r.port}#${r.remark} ${r.type} ${r.time}ms</div>`;
+                return `<div class="optimize-result-item" style="color: ${color}; font-weight: bold;">${r.ip}:${r.port}#${r.remark} ${r.type} ${r.ip}:${r.port}</div>`;
             }).join('');
 
             let finalHtml = html;
@@ -17587,7 +17589,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
-        // 获取国外测试数据
+        // 获取境外测试数据
         async function fetchOverseasTestData() {
             setStatus('status-overseas', 'loading');
             // API 配置：URL + 字段映射
@@ -17613,10 +17615,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     setNetworkFieldValue('overseas-country', loc || '未知', 'location');
                     applyNetworkCardFlag('overseas-country');
                     setStatus('status-overseas', 'success');
-                    console.log(`[国外测试] 成功: IP=${edgeIp}, 位置=${loc}`);
+                    console.log(`[境外测试] 成功: IP=${edgeIp}, 位置=${loc}`);
                     return;
                 } catch (error) {
-                    console.log(`[国外测试] ${api.url} 失败: ${error.message}`);
+                    console.log(`[境外测试] ${api.url} 失败: ${error.message}`);
                 }
             }
 
@@ -17625,7 +17627,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             clearNetworkFieldValue('overseas-country');
             applyNetworkCardFlag('overseas-country');
             setStatus('status-overseas', 'error');
-            console.error('国外测试 所有API都失败');
+            console.error('境外测试 所有API都失败');
         }
 
         // CloudFlare ProxyIP 卡片状态（支持双出口切换）
@@ -17841,7 +17843,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
-        // 获取墙外测试数据（谷歌优先，失败回退 X.com）
+        // 获取境外测试数据（谷歌优先，失败回退 X.com）
         async function fetchTwitterData() {
             setStatus('status-twitter', 'loading');
             const statusElement = document.querySelector('#status-twitter');
@@ -17854,7 +17856,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
             const renderTwitterTitle = (subtitle) => {
                 if (!titleElement) return;
-                titleElement.innerHTML = `<span class="status-indicator" id="status-twitter"></span><div class="title-text"><div class="title-main">墙外测试</div><div class="title-subtitle">${subtitle}</div></div>`;
+                titleElement.innerHTML = `<span class="status-indicator" id="status-twitter"></span><div class="title-text"><div class="title-main">境外测试</div><div class="title-subtitle">${subtitle}</div></div>`;
             };
 
             const renderTwitterTip = (sourceName) => {
@@ -17920,7 +17922,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                         };
                         break;
                     } catch (sourceError) {
-                        console.log(`[墙外测试] ${source.name} 失败: ${sourceError.message}`);
+                        console.log(`[境外测试] ${source.name} 失败: ${sourceError.message}`);
                     }
                 }
 
@@ -17944,22 +17946,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     setNetworkFieldValue('twitter-country', twLoc, 'location');
                     applyNetworkCardFlag('twitter-country');
                     setStatus('status-twitter', 'success');
-                    console.log(`[墙外测试] 成功: IP=${twIp}, 位置=${twLoc}, 来源=${fastestSuccess.providerName}`);
+                    console.log(`[境外测试] 成功: IP=${twIp}, 位置=${twLoc}, 来源=${fastestSuccess.providerName}`);
                 } catch (detailError) {
                     setNetworkFieldValue('twitter-country', '未知', 'location');
                     applyNetworkCardFlag('twitter-country');
                     setStatus('status-twitter', 'success');
-                    console.warn(`[墙外测试] 已获取IP=${fallbackIp}，但查询详细信息失败:`, detailError);
+                    console.warn(`[境外测试] 已获取IP=${fallbackIp}，但查询详细信息失败:`, detailError);
                 }
             } catch (error) {
-                setNetworkFieldError('twitter-ip', '翻墙未开启');
+                setNetworkFieldError('twitter-ip', '连接未开启');
                 clearNetworkFieldValue('twitter-country');
                 applyNetworkCardFlag('twitter-country');
                 setStatus('status-twitter', 'error');
-                renderTwitterTitle('翻墙失败');
-                renderTwitterTip('墙外站点');
+                renderTwitterTitle('连接失败');
+                renderTwitterTip('境外站点');
                 setStatus('status-twitter', 'error');
-                console.error('墙外测试接口错误:', error);
+                console.error('境外测试接口错误:', error);
             }
         }
 
@@ -19614,7 +19616,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
             }
         }
 
-        // 处理"知道了！24小时内不提示"按钮
+        // 处理"知道了。24小时内不提示"按钮
         function dismissHostsMismatchNotification() {
             const cacheKey = 'hostsMismatchNotificationTime';
             const currentTime = Date.now();
