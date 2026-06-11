@@ -10436,6 +10436,15 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                     white-space: nowrap;
                 }
 
+                .result-filter-option-count {
+                    flex: 0 0 auto;
+                    margin-left: auto;
+                    color: var(--muted);
+                    font-size: 12px;
+                    font-weight: 700;
+                    white-space: nowrap;
+                }
+
                 .result-filter-option .country-cell {
                     min-width: 0;
                 }
@@ -12937,7 +12946,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 function openResultFilterMenu(key, anchor) {
                     closeResultFilterMenu({ keepKey: true });
                     state.openResultFilterKey = key;
-                    const values = resultFilterValues(key);
+                    const options = resultFilterOptions(key);
+                    const values = options.map((option) => option.value);
                     const selectedValues = selectedResultFilterValues(key, values);
                     const menu = document.createElement("div");
                     menu.className = "result-filter-menu";
@@ -12948,11 +12958,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                             <button class="result-filter-action" type="button" data-filter-action="invert">反选</button>
                         </div>
                         <div class="result-filter-options">
-                            ${values.map((value) => {
-                                const safeValue = escapeHtml(value);
+                            ${options.map((option) => {
+                                const safeValue = escapeHtml(option.value);
                                 return `<label class="result-filter-option" title="${safeValue}">
-                                    <input type="checkbox" data-filter-value="${safeValue}" ${selectedValues.has(value) ? "checked" : ""}>
-                                    ${renderResultFilterOptionText(key, value)}
+                                    <input type="checkbox" data-filter-value="${safeValue}" ${selectedValues.has(option.value) ? "checked" : ""}>
+                                    ${renderResultFilterOptionText(key, option.value)}
+                                    <span class="result-filter-option-count">(${option.count})</span>
                                 </label>`;
                             }).join("") || '<div class="empty">暂无可筛选内容</div>'}
                         </div>`;
@@ -13026,8 +13037,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
                 }
 
                 function resultFilterValues(key) {
-                    return Array.from(new Set(state.results.map((item) => resultFilterValue(item, key))))
-                        .sort((a, b) => compareResultValue(a, b));
+                    return resultFilterOptions(key).map((option) => option.value);
+                }
+
+                function resultFilterOptions(key) {
+                    const countMap = new Map();
+                    state.results.forEach((item) => {
+                        const value = resultFilterValue(item, key);
+                        countMap.set(value, (countMap.get(value) || 0) + 1);
+                    });
+                    return Array.from(countMap.keys())
+                        .sort((a, b) => compareResultValue(a, b))
+                        .map((value) => ({ value, count: countMap.get(value) || 0 }));
                 }
 
                 function renderResultFilterOptionText(key, value) {
