@@ -8637,7 +8637,7 @@
 				</div>
 				<div class="header-buttons">
 					<button type="button" class="btn btn-mode-toggle" id="modeToggleBtn" onclick="toggleUserMode()">🐣
-						我是小白！我想简单点！</button>
+						我是简单。我想简单点。</button>
 					<button type="button" class="btn btn-danger btn-reset"
 						onclick="resetConfigWithConfirm()">⚠️重置配置</button>
 					<button type="button" class="btn btn-primary" onclick="logout()">👋退出登录</button>
@@ -9007,9 +9007,9 @@
 					<div class="form-group" id="transportGroup" style="display: none;">
 						<label>传输协议</label>
 						<select id="transport" title="传输协议" onchange="handleTransportChange()">
-							<option value="ws">WebSocket 稳！</option>
-							<option value="xhttp">XHTTP 大量消耗请求数！</option>
-							<option value="grpc">gRPC 花里胡笑！</option>
+							<option value="ws">WebSocket</option>
+							<option value="xhttp">XHTTP</option>
+							<option value="grpc">gRPC</option>
 						</select>
 					</div>
 
@@ -9075,10 +9075,10 @@
 						<div class="form-group" id="enable0RTTGroup" style="display: none;">
 							<div class="input-wrapper">
 								<div class="checkbox-group">
-									<input type="checkbox" id="enable0RTT" title="启用0-RTT(小白勿用)"
+									<input type="checkbox" id="enable0RTT" title="启用0-RTT(简单勿用)"
 										onchange="markModified('config')">
 									<label for="enable0RTT" class="checkbox-label"
-										title="启用0-RTT(小白勿用)">启用0-RTT(ed=2560)</label>
+										title="启用0-RTT(简单勿用)">启用0-RTT(ed=2560)</label>
 								</div>
 							</div>
 						</div>
@@ -9132,10 +9132,10 @@
 						<div class="input-wrapper">
 							<div class="checkbox-group">
 								<input type="checkbox" id="enableECH"
-									title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
+									title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox"
 									onchange="handleECHEnableChange()">
 								<label for="enableECH" class="checkbox-label"
-									title="启用ECH可以避免域名阻断-1现象！&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
+									title="启用ECH可以避免域名阻断-1现象。&#10;&#10;支持版本&#10;v2rayN v7.17.0+&#10;v2rayNG v2.0.0+&#10;Clash.Meta(Mihomo)&#10;Singbox">启用</label>
 							</div>
 						</div>
 					</div>
@@ -9158,7 +9158,7 @@
 								<option value="https://odvr.nic.cz/doh" data-region="international">
 									https://odvr.nic.cz/doh（CZ.NIC DoH）</option>
 								<option value="https://dns.alidns.com/dns-query" data-region="domestic">
-									https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）小白推荐选这个！！！
+									https://dns.alidns.com/dns-query（阿里 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）
 								</option>
 								<option value="https://sm2.doh.pub/dns-query" data-region="domestic">
 									https://sm2.doh.pub/dns-query（腾讯国密 DoH：国内DNS需搭配设置ECH解析域名，是否可用需自行验证）</option>
@@ -9176,13 +9176,13 @@
 					</div>
 
 					<div class="form-group" id="echSNIGroup"
-						title="用于解析 EchConfig 的域名，并非ECH伪装域名！CF ECH伪装域名均为 cloudflare-ech.com ！！！"
+						title="用于解析 EchConfig 的域名，并非ECH伪装域名。CF ECH伪装域名均为 cloudflare-ech.com 。。。"
 						style="display: none; align-items: start;">
 						<label for="echSNISelect" style="padding-top: 10px;">EchConfig 解析域名</label>
 						<div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
 							<select id="echSNISelect" style="display: none;" onchange="onEchSNISelectChange()">
 								<option value="__AUTO__">自动获取（使用节点的伪装域名解析 EchConfig）</option>
-								<option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）小白推荐选这个！！！
+								<option value="cloudflare-ech.com">cloudflare-ech.com（Cloudflare ECH域名）
 								</option>
 								<option value="crypto.cloudflare.com">crypto.cloudflare.com（Cloudflare密码学服务）</option>
 								<option value="encryptedsni.com">encryptedsni.com（Cloudflare加密SNI）</option>
@@ -12325,7 +12325,7 @@
 							kind: "non-cn",
 							heading: "红牌警告",
 							title: "检测到当前网络出口不是 CN 直连",
-							message: "请确认浏览器当前网络是否经过了 代理、VPN 或 境外网络，\n在线优选仅有 CN 直连网络环境才可以实现！",
+							message: "请确认浏览器当前网络是否经过了 代理、VPN 或 境外网络，\n在线优选仅有 CN 直连网络环境才可以实现。",
 							rows: nonCn,
 							details: completed
 						};
@@ -14556,7 +14556,7 @@
 		<div class="modal proxyip-help-modal" onclick="event.stopPropagation()">
 			<button type="button" class="modal-close" onclick="closeProxyIPHelpModal()">×</button>
 
-			<!-- 小白说明 -->
+			<!-- 简单说明 -->
 			<div id="proxyIPHelpSimple" style="display: block;">
 				<div class="api-docs">
 					<h2 class="section-title">🤔 为什么需要反代模式？PROXYIP又是什么？</h2>
@@ -15510,13 +15510,13 @@
 					style="margin: 0 0 16px 0; padding: 12px; background-color: transparent; border-radius: 0; text-align: left; font-size: 13px; max-height: 120px; overflow-y: auto; word-break: break-all; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;">
 				</div>
 				<p style="margin: 0 0 16px 0; font-size: 13px; line-height: 1.6; text-align: left;">
-					<strong>如何修改？</strong>请在高手模式下的"⚙️ 详细配置信息"，在"HOST"里添加您的域名"<strong id="hostToAdd"
+					<strong>如何修改？</strong>请在高级模式下的"⚙️ 详细配置信息"，在"HOST"里添加您的域名"<strong id="hostToAdd"
 						style="color: #2196F3;"></strong>"，保存配置后即可生效。
 				</p>
 			</div>
 			<div style="display: flex; gap: 12px; justify-content: center;">
 				<button type="button" class="btn btn-hosts-warning" onclick="dismissHostsMismatchNotification()"
-					style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">我知道了！24小时内不再提示！</button>
+					style="flex: 1; background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); color: #fff; border: none; padding: 12px 16px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); transition: all 0.3s ease;">我知道了。24小时内不再提示。</button>
 			</div>
 		</div>
 	</div>
@@ -19113,11 +19113,11 @@
 				});
 
 				if (!response.ok) throw new Error('保存失败');
-				showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容！', 'success');
+				showToast('✅ 配置已保存，请更新订阅，才能获取最新节点内容。', 'success');
 				modifiedSections.delete(section);
 				updateButtonStates();
 			} catch (error) {
-				showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试！', 'error');
+				showToast('😢 ' + error.message + '，请检测网络环境，或关闭代理后再试。', 'error');
 			}
 		}
 
@@ -19320,7 +19320,7 @@
 			if (userMode === 'simple') {
 				return {
 					icon: '🐣',
-					title: '进入小白模式',
+					title: '进入简单模式',
 					subtitle: '常用设置已经为你收好'
 				};
 			}
@@ -19511,11 +19511,11 @@
 
 			if (isSimpleMode) {
 				cardContainer.classList.add('simple-mode');
-				btn.textContent = '🚀 我是高手！我就要折腾！';
+				btn.textContent = '🚀 高级模式';
 				localStorage.setItem('userMode', 'simple');
 			} else {
 				cardContainer.classList.remove('simple-mode');
-				btn.textContent = '🐣 我是小白！我想简单点！';
+				btn.textContent = '🐣 简单模式';
 				localStorage.setItem('userMode', 'expert');
 			}
 
@@ -19525,7 +19525,7 @@
 			});
 		}
 
-		// 切换用户模式（小白模式 / 高手模式）
+		// 切换用户模式（简单模式 / 高级模式）
 		function toggleUserMode() {
 			const cardContainer = document.querySelector('.card-container');
 
@@ -19543,7 +19543,7 @@
 
 		// 初始化用户模式
 		function initUserMode() {
-			const userMode = localStorage.getItem('userMode') || 'simple'; // 默认为小白模式
+			const userMode = localStorage.getItem('userMode') || 'simple'; // 默认为简单模式
 			applyUserMode(userMode);
 		}
 
@@ -22298,7 +22298,7 @@
 				// 第二步：通过Bot Token向Chat ID推送测试消息
 				const sendUrlParams = new URLSearchParams({
 					chat_id: chatID,
-					text: '✅ Telegram 通知配置已验证成功！'
+					text: '✅ Telegram 通知配置已验证成功。'
 				});
 				const sendResult = await requestTelegram('sendMessage', sendUrlParams, getMeResult.base);
 				const sendData = sendResult.data;
@@ -22541,7 +22541,7 @@
 					statusEl.style.background = 'linear-gradient(135deg, #10b981 0, #059669 100%)';
 					const maxQuota = data.max || 100000;
 					const percentage = (data.total / maxQuota * 100).toFixed(2);
-					statusEl.textContent = `✅ 验证成功！ 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
+					statusEl.textContent = `✅ 验证成功。 今天的请求配额: ${data.total}/${maxQuota} (${percentage}%)`;
 					confirmBtn.disabled = false;
 					confirmBtn.style.opacity = '1';
 					confirmBtn.dataset.testPassed = 'true';
@@ -23118,7 +23118,7 @@
 					}
 					document.getElementById('btnAppendAPI').disabled = false;
 					document.getElementById('btnAppendResults').disabled = false;
-					showToast('✅ API接口验证成功！', 'success');
+					showToast('✅ API接口验证成功。', 'success');
 				} else {
 					// 接口不可用
 					document.getElementById('apiOptimizeResults').value = '❌ 接口不可用，请检查URL和端口是否正确';
@@ -26108,7 +26108,7 @@
 			}
 		}
 
-		// 处理"知道了！24小时内不提示"按钮
+		// 处理"知道了。24小时内不提示"按钮
 		function dismissHostsMismatchNotification() {
 			const cacheKey = 'hostsMismatchNotificationTime';
 			const currentTime = Date.now();
