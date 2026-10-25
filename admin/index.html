@@ -9940,6 +9940,10 @@
 			position: absolute;
 			top: 0;
 			left: 0;
+			/* right:0 仅作兜底（JS 未执行时铺满 .editor-area）。正常由 initCustomIPsHighlight()
+			   把右侧定位内缩一个竖向滚动条宽度：textarea 出现滚动条后 clientWidth 会扣掉滚动条，
+			   若这里始终铺满容器，高亮层会折得比 textarea 晚 → 可视文字与真实选区/复制内容错位。
+			   宽度同步逻辑见 syncHighlightGeometry()。 */
 			right: 0;
 			margin: 0;
 			padding: 12px !important;
@@ -19976,8 +19980,46 @@
 			const hlLayer = container.querySelector('.line-highlight');
 			if (!hlLayer) return;
 
+			// 同步高亮层宽度：必须与 textarea 的「文本可用宽度」严格相等。
+			// 为什么必须同步宽度：高亮层原本靠 left:0;right:0 铺满 .editor-area，而 textarea 是
+			// overflow:auto + box-sizing:border-box，一旦出现竖向滚动条，它的 clientWidth 会扣掉
+			// 滚动条宽度（scrollbar-width:thin 实测 10px），文本可用宽度随之变窄，
+			// 于是高亮层折行比 textarea 晚，屏幕上看到的字与真实选区/复制内容错位。
+			// 做法：不给高亮层写死 px 宽度，而是把「右侧定位」内缩一个滚动条宽度。
+			// right 是相对 .editor-area（与 textarea 边框盒等宽）解析的，由浏览器在每次布局时
+			// 重新计算，因此高亮层宽度天然与 textarea 实时同步（含小数像素），
+			// 不会出现 JS 写入定宽后容器再变化导致的半像素偏差。
+			let lastScrollbarWidth = -1;
+			function syncHighlightGeometry() {
+				const boxWidth = ta.offsetWidth || 0;
+				const clientWidth = ta.clientWidth || 0;
+
+				if (!boxWidth || !clientWidth) {
+					// section 处于 display:none（未切到「自定义」模式）时量不到宽度：
+					// 绝不能把宽度锁成 0，清空内联样式回落到 CSS 的 left:0;right:0，
+					// 等元素可见后由 _refreshLineEditor / resize 再次同步。
+					if (lastScrollbarWidth !== 0) {
+						lastScrollbarWidth = 0;
+						hlLayer.style.right = '';
+						hlLayer.style.width = '';
+					}
+					return;
+				}
+
+				// textarea 为 border:none，故两者差值即竖向滚动条的布局宽度（无滚动条时为 0）
+				const scrollbarWidth = Math.max(0, boxWidth - clientWidth);
+				if (scrollbarWidth !== lastScrollbarWidth) {
+					lastScrollbarWidth = scrollbarWidth;
+					hlLayer.style.right = scrollbarWidth + 'px';
+					// 清掉可能残留的定宽，让宽度由 left/right 自动推导
+					hlLayer.style.width = '';
+				}
+			}
+
 			// 渲染高亮层（O(行数)；innerHTML 前统一 escapeHtmlCIP 转义）
 			function renderHighlight() {
+				// 先对齐宽度再排版：否则折行点按上一帧的宽度计算，仍会错位
+				syncHighlightGeometry();
 				const lines = (ta.value || '').split(/\r\n|\r|\n/);
 				let html = '';
 				for (let i = 0; i < lines.length; i++) {
@@ -20019,6 +20061,9 @@
 				const originalRefresh = ta._refreshLineEditor;
 				ta._refreshLineEditor = function () {
 					originalRefresh();
+					// 同步修正宽度（例如 updateIPMode() 把 section 从 display:none 变可见，
+					// 或 resize:vertical 拖拽后），让本帧渲染就使用正确的折行宽度
+					syncHighlightGeometry();
 					scheduleHighlight();
 				};
 			}
